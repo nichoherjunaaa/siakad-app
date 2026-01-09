@@ -10,12 +10,7 @@ import Announcements from '@/Components/Dashboard/Announcements';
 import PerformanceChart from '@/Components/Dashboard/PerformanceChart';
 
 export default function Dashboard({ auth, status }) {
-    const userData = {
-        role: 'siswa', // Bisa diubah: 'guru', 'orangtua'
-        name: 'Ahmad Rizki',
-        id: 'SM2024001',
-        class: 'XII IPA 1'
-    };
+    const userData = auth.user;
 
     // Stats data based on role
     const statsData = {

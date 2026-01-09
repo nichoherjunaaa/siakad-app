@@ -1,5 +1,5 @@
 // resources/js/Components/Layout/Sidebar.jsx
-import { Link } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import {
     FaHome,
@@ -13,20 +13,22 @@ import {
 } from 'react-icons/fa';
 
 export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
+    const { url } = usePage();
+    const isActive = (name) => route().current(name);
     const navigation = [
-        { name: 'Dashboard', href: route('dashboard'), icon: FaHome, current: true },
-        { name: 'Jadwal', href: '#', icon: FaCalendarAlt },
-        { name: 'Materi', href: '#', icon: FaBook },
-        { name: 'Nilai', href: '#', icon: FaChartLine },
-        { name: 'Tugas', href: '#', icon: FaClipboardCheck },
-        { name: 'Notifikasi', href: '#', icon: FaBell, badge: 3 },
-        { name: 'Pengaturan', href: '#', icon: FaCog },
+        { name: 'Beranda', route: 'dashboard', icon: FaHome },
+        { name: 'Jadwal', route: 'schedule', icon: FaCalendarAlt },
+        { name: 'Materi', route: '#', icon: FaBook },
+        { name: 'Nilai', route: '#', icon: FaChartLine },
+        { name: 'Tugas', route: '#', icon: FaClipboardCheck },
+        { name: 'Notifikasi', route: '#', icon: FaBell, badge: 3 },
+        { name: 'Pengaturan', route: '#', icon: FaCog },
     ];
 
 
     const handleLogout = () => {
         if (confirm('Apakah Anda yakin ingin keluar?')) {
-            window.location.href = route('logout');
+            router.post(route('logout'));
         }
     };
 
@@ -62,7 +64,7 @@ function SidebarContent({ user, navigation, handleLogout }) {
             {/* School Logo */}
             <div className="p-6 border-b border-neutral-200">
                 <div className="flex items-center space-x-3">
-                        <img src="/images/logo/logo.png" alt="" className="w-14 h-14 rounded-full" />
+                    <img src="/images/logo/logo.png" alt="" className="w-14 h-14 rounded-full" />
                     <div>
                         <h1 className="font-bold text-lg text-neutral-900">Insan Mulia</h1>
                         <p className="text-xs text-neutral-500">Sistem Informasi Sekolah</p>
@@ -89,22 +91,32 @@ function SidebarContent({ user, navigation, handleLogout }) {
             {/* Navigation Menu */}
             <nav className="flex-1 p-4 overflow-y-auto">
                 <ul className="space-y-1">
-                    {navigation.map((item) => (
-                        <li key={item.name}>
-                            <Link
-                                href={item.href}
-                                className={`flex items-center space-x-3 p-3 rounded-xl ${item.current ? 'bg-primary text-white active-menu' : 'hover:bg-neutral-100 text-neutral-700'}`}
-                            >
-                                <item.icon className="w-5 h-5" />
-                                <span>{item.name}</span>
-                                {item.badge && (
-                                    <span className="ml-auto notification-badge bg-danger text-white">
-                                        {item.badge}
-                                    </span>
-                                )}
-                            </Link>
-                        </li>
-                    ))}
+                    {navigation.map((item) => {
+                        const active = item.route !== '#' && route().current(item.route);
+
+                        return (
+                            <li key={item.name}>
+                                <Link
+                                    href={item.route === '#' ? '#' : route(item.route)}
+                                    className={`flex items-center space-x-3 p-3 rounded-xl transition
+                    ${active
+                                            ? 'bg-primary text-white active-menu'
+                                            : 'hover:bg-neutral-100 text-neutral-700'
+                                        }`}
+                                >
+                                    <item.icon className="w-5 h-5" />
+                                    <span>{item.name}</span>
+
+                                    {item.badge && (
+                                        <span className="ml-auto notification-badge bg-danger text-white">
+                                            {item.badge}
+                                        </span>
+                                    )}
+                                </Link>
+                            </li>
+                        );
+                    })}
+
                 </ul>
 
                 {/* Quick Stats */}
