@@ -1,31 +1,31 @@
-// resources/js/Components/Dashboard/QuickActions.jsx
+import { FaUpload, FaCalendar, FaFileDownload, FaChartBar, FaChalkboardTeacher, FaClipboardList, FaEdit, FaUsers, FaUserGraduate, FaChartLine, FaComments, FaFileInvoice } from "react-icons/fa";
 export default function QuickActions({ role = 'siswa' }) {
     // Gunakan href biasa untuk sementara
     const actionsByRole = {
         siswa: [
             { 
-                icon: "fas fa-upload", 
+                icon: FaUpload, 
                 label: "Upload Tugas", 
                 href: "#",
                 color: "text-blue-500",
                 bgColor: "bg-blue-50"
             },
             { 
-                icon: "fas fa-calendar", 
+                icon: FaCalendar, 
                 label: "Jadwal", 
                 href: "#",
                 color: "text-green-500",
                 bgColor: "bg-green-50"
             },
             { 
-                icon: "fas fa-file-download", 
+                icon: FaFileDownload, 
                 label: "Materi", 
                 href: "#",
                 color: "text-purple-500",
                 bgColor: "bg-purple-50"
             },
             { 
-                icon: "fas fa-chart-bar", 
+                icon: FaChartBar, 
                 label: "Rapor", 
                 href: "#",
                 color: "text-orange-500",
@@ -34,28 +34,28 @@ export default function QuickActions({ role = 'siswa' }) {
         ],
         guru: [
             { 
-                icon: "fas fa-chalkboard-teacher", 
+                icon: FaChalkboardTeacher, 
                 label: "Mengajar", 
                 href: "#",
                 color: "text-blue-500",
                 bgColor: "bg-blue-50"
             },
             { 
-                icon: "fas fa-clipboard-list", 
+                icon: FaClipboardList, 
                 label: "Absensi", 
                 href: "#",
                 color: "text-green-500",
                 bgColor: "bg-green-50"
             },
             { 
-                icon: "fas fa-edit", 
+                icon: FaEdit, 
                 label: "Input Nilai", 
                 href: "#",
                 color: "text-purple-500",
                 bgColor: "bg-purple-50"
             },
             { 
-                icon: "fas fa-users", 
+                icon: FaUsers, 
                 label: "Siswa", 
                 href: "#",
                 color: "text-orange-500",
@@ -64,28 +64,28 @@ export default function QuickActions({ role = 'siswa' }) {
         ],
         orangtua: [
             { 
-                icon: "fas fa-user-graduate", 
+                icon: FaUserGraduate, 
                 label: "Anak", 
                 href: "#",
                 color: "text-blue-500",
                 bgColor: "bg-blue-50"
             },
             { 
-                icon: "fas fa-chart-line", 
+                icon: FaChartLine, 
                 label: "Perkembangan", 
                 href: "#",
                 color: "text-green-500",
                 bgColor: "bg-green-50"
             },
             { 
-                icon: "fas fa-comments", 
+                icon: FaComments, 
                 label: "Konsultasi", 
                 href: "#",
                 color: "text-purple-500",
                 bgColor: "bg-purple-50"
             },
             { 
-                icon: "fas fa-file-invoice", 
+                icon: FaFileInvoice, 
                 label: "Keuangan", 
                 href: "#",
                 color: "text-orange-500",
@@ -107,7 +107,7 @@ export default function QuickActions({ role = 'siswa' }) {
                         className="flex flex-col items-center justify-center p-4 rounded-xl border border-neutral-200 hover:bg-neutral-50 hover:border-primary transition-all hover:scale-105"
                     >
                         <div className={`w-12 h-12 ${action.bgColor} rounded-full flex items-center justify-center mb-2`}>
-                            <i className={`${action.icon} ${action.color} text-xl`}></i>
+                            <action.icon className={`${action.color} text-xl`} />
                         </div>
                         <span className="text-sm font-medium text-neutral-700">{action.label}</span>
                     </a>

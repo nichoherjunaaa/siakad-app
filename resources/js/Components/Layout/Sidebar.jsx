@@ -1,17 +1,28 @@
 // resources/js/Components/Layout/Sidebar.jsx
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
+import {
+    FaHome,
+    FaCalendarAlt,
+    FaBook,
+    FaChartLine,
+    FaClipboardCheck,
+    FaBell,
+    FaCog,
+    FaSignOutAlt,
+} from 'react-icons/fa';
 
 export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
     const navigation = [
-        { name: 'Dashboard', href: route('dashboard'), icon: 'fas fa-home', current: true },
-        { name: 'Jadwal', href: '#', icon: 'fas fa-calendar-alt', current: false },
-        { name: 'Materi', href: '#', icon: 'fas fa-book', current: false },
-        { name: 'Nilai', href: '#', icon: 'fas fa-chart-line', current: false },
-        { name: 'Tugas', href: '#', icon: 'fas fa-clipboard-check', current: false },
-        { name: 'Notifikasi', href: '#', icon: 'fas fa-bell', current: false, badge: 3 },
-        { name: 'Pengaturan', href: '#', icon: 'fas fa-cog', current: false },
+        { name: 'Dashboard', href: route('dashboard'), icon: FaHome, current: true },
+        { name: 'Jadwal', href: '#', icon: FaCalendarAlt },
+        { name: 'Materi', href: '#', icon: FaBook },
+        { name: 'Nilai', href: '#', icon: FaChartLine },
+        { name: 'Tugas', href: '#', icon: FaClipboardCheck },
+        { name: 'Notifikasi', href: '#', icon: FaBell, badge: 3 },
+        { name: 'Pengaturan', href: '#', icon: FaCog },
     ];
+
 
     const handleLogout = () => {
         if (confirm('Apakah Anda yakin ingin keluar?')) {
@@ -25,9 +36,9 @@ export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
             <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-neutral-200 transform transition-transform duration-300 md:hidden ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex flex-col h-full">
                     {/* Mobile Sidebar Content */}
-                    <SidebarContent 
-                        user={user} 
-                        navigation={navigation} 
+                    <SidebarContent
+                        user={user}
+                        navigation={navigation}
                         handleLogout={handleLogout}
                     />
                 </div>
@@ -35,9 +46,9 @@ export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
 
             {/* Desktop Sidebar */}
             <aside className="hidden md:flex md:flex-col w-64 bg-white border-r border-neutral-200 fixed h-screen z-40">
-                <SidebarContent 
-                    user={user} 
-                    navigation={navigation} 
+                <SidebarContent
+                    user={user}
+                    navigation={navigation}
                     handleLogout={handleLogout}
                 />
             </aside>
@@ -51,9 +62,7 @@ function SidebarContent({ user, navigation, handleLogout }) {
             {/* School Logo */}
             <div className="p-6 border-b border-neutral-200">
                 <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-                        <i className="fas fa-graduation-cap text-white text-lg"></i>
-                    </div>
+                        <img src="/images/logo/logo.png" alt="" className="w-14 h-14 rounded-full" />
                     <div>
                         <h1 className="font-bold text-lg text-neutral-900">Insan Mulia</h1>
                         <p className="text-xs text-neutral-500">Sistem Informasi Sekolah</p>
@@ -86,7 +95,7 @@ function SidebarContent({ user, navigation, handleLogout }) {
                                 href={item.href}
                                 className={`flex items-center space-x-3 p-3 rounded-xl ${item.current ? 'bg-primary text-white active-menu' : 'hover:bg-neutral-100 text-neutral-700'}`}
                             >
-                                <i className={`${item.icon} w-5`}></i>
+                                <item.icon className="w-5 h-5" />
                                 <span>{item.name}</span>
                                 {item.badge && (
                                     <span className="ml-auto notification-badge bg-danger text-white">
@@ -124,7 +133,7 @@ function SidebarContent({ user, navigation, handleLogout }) {
                     onClick={handleLogout}
                     className="flex items-center justify-center space-x-2 w-full p-3 rounded-xl border border-neutral-300 hover:bg-neutral-100 text-neutral-700"
                 >
-                    <i className="fas fa-sign-out-alt"></i>
+                    <FaSignOutAlt />
                     <span>Keluar</span>
                 </button>
             </div>

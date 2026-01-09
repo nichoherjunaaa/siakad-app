@@ -1,7 +1,7 @@
 // resources/js/Components/Layout/Header.jsx
 import { useState, useEffect } from 'react';
 import NotificationDropdown from './NotificationDropdown';
-
+import { FaBars, FaBell, FaCog, FaPlus, FaSearch } from 'react-icons/fa';
 export default function Header({
     title = "Dashboard",
     onMenuClick,
@@ -39,7 +39,7 @@ export default function Header({
                     onClick={onMenuClick}
                     className="md:hidden p-2 rounded-lg hover:bg-neutral-100 transition-colors"
                 >
-                    <i className="fas fa-bars text-xl text-neutral-700"></i>
+                    <FaBars className="text-xl text-neutral-700" />
                 </button>
 
                 {/* Page Title */}
@@ -54,7 +54,7 @@ export default function Header({
                 {/* Search */}
                 <div className="relative hidden md:block">
                     <form onSubmit={handleSearch} className="relative">
-                        <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
+                        <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400" />
                         <input
                             type="text"
                             placeholder="Cari..."
@@ -71,7 +71,7 @@ export default function Header({
                         onClick={onNotificationClick}
                         className="p-2 rounded-full hover:bg-neutral-100 transition-colors relative"
                     >
-                        <i className="fas fa-bell text-xl text-neutral-700"></i>
+                        <FaBell className="text-xl text-neutral-700" />
                         <span className="absolute -top-1 -right-1 w-5 h-5 bg-danger text-white text-xs rounded-full flex items-center justify-center">
                             3
                         </span>
@@ -89,13 +89,7 @@ export default function Header({
                         className="p-2 rounded-full hover:bg-neutral-100 transition-colors"
                         title="Tambah"
                     >
-                        <i className="fas fa-plus text-neutral-700"></i>
-                    </button>
-                    <button
-                        className="p-2 rounded-full hover:bg-neutral-100 transition-colors"
-                        title="Bantuan"
-                    >
-                        <i className="fas fa-question-circle text-neutral-700"></i>
+                        <FaPlus className="text-neutral-700" />
                     </button>
                 </div>
             </div>

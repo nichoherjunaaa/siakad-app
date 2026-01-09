@@ -1,4 +1,4 @@
-// resources/js/Components/Dashboard/StatsCards.jsx
+import { FaBookOpen, FaTasks, FaChartLine, FaCalendarCheck, FaChalkboardTeacher, FaUserGraduate, FaUsers } from "react-icons/fa";
 export default function StatsCards({ role = 'siswa', stats }) {
     // Gunakan default stats jika tidak ada props
     const defaultStats = {
@@ -14,7 +14,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
         siswa: [
             {
                 id: 1,
-                icon: 'fas fa-book-open',
+                icon: FaBookOpen,
                 iconColor: 'text-blue-600',
                 bgColor: 'bg-blue-100',
                 label: 'Hari Ini',
@@ -23,7 +23,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 2,
-                icon: 'fas fa-tasks',
+                icon: FaTasks,
                 iconColor: 'text-green-600',
                 bgColor: 'bg-green-100',
                 label: 'Batas Waktu',
@@ -32,7 +32,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 3,
-                icon: 'fas fa-chart-line',
+                icon: FaChartLine,
                 iconColor: 'text-purple-600',
                 bgColor: 'bg-purple-100',
                 label: 'Rata-rata',
@@ -41,7 +41,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 4,
-                icon: 'fas fa-calendar-check',
+                icon: FaCalendarCheck,
                 iconColor: 'text-orange-600',
                 bgColor: 'bg-orange-100',
                 label: 'Kehadiran',
@@ -52,7 +52,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
         guru: [
             {
                 id: 1,
-                icon: 'fas fa-chalkboard-teacher',
+                icon: FaChalkboardTeacher,
                 iconColor: 'text-blue-600',
                 bgColor: 'bg-blue-100',
                 label: 'Hari Ini',
@@ -61,7 +61,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 2,
-                icon: 'fas fa-tasks',
+                icon: FaTasks,
                 iconColor: 'text-green-600',
                 bgColor: 'bg-green-100',
                 label: 'Perlu Dinilai',
@@ -70,7 +70,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 3,
-                icon: 'fas fa-user-graduate',
+                icon: FaUserGraduate,
                 iconColor: 'text-purple-600',
                 bgColor: 'bg-purple-100',
                 label: 'Rata-rata Kelas',
@@ -79,7 +79,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 4,
-                icon: 'fas fa-users',
+                icon: FaUsers,
                 iconColor: 'text-orange-600',
                 bgColor: 'bg-orange-100',
                 label: 'Kehadiran',
@@ -90,7 +90,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
         orangtua: [
             {
                 id: 1,
-                icon: 'fas fa-book-open',
+                icon: FaBookOpen,
                 iconColor: 'text-blue-600',
                 bgColor: 'bg-blue-100',
                 label: 'Anak Hari Ini',
@@ -99,7 +99,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 2,
-                icon: 'fas fa-tasks',
+                icon: FaTasks,
                 iconColor: 'text-green-600',
                 bgColor: 'bg-green-100',
                 label: 'Tugas Anak',
@@ -108,7 +108,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 3,
-                icon: 'fas fa-chart-line',
+                icon: FaChartLine,
                 iconColor: 'text-purple-600',
                 bgColor: 'bg-purple-100',
                 label: 'Nilai Anak',
@@ -117,7 +117,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
             },
             {
                 id: 4,
-                icon: 'fas fa-calendar-check',
+                icon: FaCalendarCheck,
                 iconColor: 'text-orange-600',
                 bgColor: 'bg-orange-100',
                 label: 'Kehadiran Anak',
@@ -139,7 +139,7 @@ export default function StatsCards({ role = 'siswa', stats }) {
                 >
                     <div className="flex items-center justify-between mb-4">
                         <div className={`w-12 h-12 ${card.bgColor} rounded-xl flex items-center justify-center`}>
-                            <i className={`${card.icon} ${card.iconColor} text-xl`}></i>
+                            <card.icon className={`${card.iconColor} text-xl`} />
                         </div>
                         <span className={`text-xs font-semibold px-2 py-1 rounded-full ${card.bgColor} ${card.iconColor}`}>
                             {card.label}

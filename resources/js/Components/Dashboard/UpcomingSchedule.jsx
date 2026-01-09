@@ -1,6 +1,6 @@
 // resources/js/Components/Dashboard/UpcomingSchedule.jsx
 import { useState } from 'react';
-
+import { FaCalculator, FaAtom, FaLanguage, FaBook } from 'react-icons/fa';
 export default function UpcomingSchedule() {
     const [schedules] = useState([
         { 
@@ -34,10 +34,10 @@ export default function UpcomingSchedule() {
 
     const getIconByType = (type) => {
         switch(type) {
-            case 'matematika': return 'fas fa-calculator text-blue-500';
-            case 'fisika': return 'fas fa-atom text-purple-500';
-            case 'inggris': return 'fas fa-language text-green-500';
-            default: return 'fas fa-book text-gray-500';
+            case 'matematika': return FaCalculator;
+            case 'fisika': return FaAtom;
+            case 'inggris': return FaLanguage;
+            default: return FaBook;
         }
     };
 
@@ -52,10 +52,10 @@ export default function UpcomingSchedule() {
         }
     };
 
-    // Ganti route() dengan href biasa untuk sementara
     const scheduleLink = "#"; // Ganti dengan "/schedule" jika sudah ada route
 
     return (
+        
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200">
             <div className="flex justify-between items-center mb-6">
                 <h3 className="text-lg font-bold text-neutral-900">Jadwal Berikutnya</h3>
@@ -75,7 +75,10 @@ export default function UpcomingSchedule() {
                             className="flex items-center p-4 rounded-xl border border-neutral-200 hover:bg-neutral-50 transition-colors"
                         >
                             <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
-                                <i className={`${getIconByType(schedule.type)} text-lg`}></i>
+                                {(() => {
+                                    const Icon = getIconByType(schedule.type);
+                                    return <Icon className="text-primary text-xl" />;
+                                })()}
                             </div>
                             <div className="flex-1 min-w-0">
                                 <h4 className="font-medium text-neutral-900 truncate">

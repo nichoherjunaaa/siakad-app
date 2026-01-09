@@ -69,15 +69,15 @@ export default function Dashboard({ auth, status }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Left Column */}
                 <div className="space-y-6">
-                    <UpcomingSchedule />
                     <RecentAssignments />
+                    {/* <QuickActions role={userData.role} /> */}
+                    <PerformanceChart role={userData.role} />
                 </div>
 
                 {/* Right Column */}
                 <div className="space-y-6">
-                    <QuickActions role={userData.role} />
-                    <Announcements />
-                    <PerformanceChart role={userData.role} />
+                    <UpcomingSchedule />
+                    {/* <Announcements /> */}
                 </div>
             </div>
         </DashboardLayout>
