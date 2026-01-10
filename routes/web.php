@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\GradesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Foundation\Application;
@@ -16,8 +18,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule');
+    Route::get('/materials', [MaterialsController::class, 'index'])->name('materials');
+    Route::get('/grades', [GradesController::class, 'index'])->name('grades');
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

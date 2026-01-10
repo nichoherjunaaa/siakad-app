@@ -1,4 +1,3 @@
-// resources/js/Components/Layout/Sidebar.jsx
 import { Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import {
@@ -18,8 +17,8 @@ export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
     const navigation = [
         { name: 'Beranda', route: 'dashboard', icon: FaHome },
         { name: 'Jadwal', route: 'schedule', icon: FaCalendarAlt },
-        { name: 'Materi', route: '#', icon: FaBook },
-        { name: 'Nilai', route: '#', icon: FaChartLine },
+        { name: 'Materi', route: 'materials', icon: FaBook },
+        { name: 'Nilai', route: 'grades', icon: FaChartLine },
         { name: 'Tugas', route: '#', icon: FaClipboardCheck },
         { name: 'Notifikasi', route: '#', icon: FaBell, badge: 3 },
         { name: 'Pengaturan', route: '#', icon: FaCog },
