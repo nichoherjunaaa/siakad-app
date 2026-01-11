@@ -1,8 +1,8 @@
-// resources/js/Components/Schedule/ScheduleView.jsx
 import { useState, useEffect } from 'react';
+import { FaCalendar, FaChevronLeft, FaChevronRight, FaClock, FaDoorOpen, FaUserTie } from 'react-icons/fa';
 
 export default function ScheduleView({ user }) {
-    const [viewMode, setViewMode] = useState('weekly'); // 'daily', 'weekly', 'monthly'
+    const [viewMode, setViewMode] = useState('weekly'); 
     const [selectedDay, setSelectedDay] = useState('monday');
     const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -177,7 +177,7 @@ export default function ScheduleView({ user }) {
                                 onClick={handlePreviousDay}
                                 className="p-2 rounded-lg hover:bg-neutral-100"
                             >
-                                <i className="fas fa-chevron-left"></i>
+                                <FaChevronLeft/>
                             </button>
                             <button
                                 onClick={handleToday}
@@ -189,7 +189,7 @@ export default function ScheduleView({ user }) {
                                 onClick={handleNextDay}
                                 className="p-2 rounded-lg hover:bg-neutral-100"
                             >
-                                <i className="fas fa-chevron-right"></i>
+                                <FaChevronRight/>
                             </button>
                         </div>
                     </div>
@@ -237,28 +237,28 @@ export default function ScheduleView({ user }) {
                                             </div>
                                             <div className="flex flex-wrap gap-3 text-sm text-neutral-600">
                                                 <span className="flex items-center">
-                                                    <i className="fas fa-user-tie mr-1"></i>
+                                                    <FaUserTie/>
                                                     {item.teacher}
                                                 </span>
                                                 <span className="flex items-center">
-                                                    <i className="fas fa-door-open mr-1"></i>
+                                                    <FaDoorOpen className="mr-1"/>
                                                     {item.room}
                                                 </span>
                                                 <span className="flex items-center">
-                                                    <i className="fas fa-clock mr-1"></i>
+                                                    <FaClock className='mr-1'/>
                                                     {item.time}
                                                 </span>
                                             </div>
                                         </div>
                                         <button className="ml-4 p-2 rounded-lg hover:bg-neutral-100">
-                                            <i className="fas fa-chevron-right"></i>
+                                            <FaChevronRight/>
                                         </button>
                                     </div>
                                 );
                             })
                         ) : (
                             <div className="text-center py-12">
-                                <i className="fas fa-calendar-times text-4xl text-neutral-300 mb-4"></i>
+                                <FaCalendarTimes className="text-4xl text-neutral-300 mb-4 mx-auto"/>
                                 <h3 className="text-lg font-medium mb-2">Tidak ada jadwal</h3>
                                 <p className="text-neutral-600">Tidak ada jadwal pelajaran untuk hari ini.</p>
                             </div>
@@ -322,7 +322,7 @@ export default function ScheduleView({ user }) {
                 <div className="p-6">
                     <h3 className="text-xl font-bold text-neutral-900 mb-6">Kalender Akademik</h3>
                     <div className="text-center py-12">
-                        <i className="fas fa-calendar-alt text-4xl text-neutral-300 mb-4"></i>
+                        <FaCalendar className="text-4xl text-neutral-300 mb-4 mx-auto" />
                         <h3 className="text-lg font-medium mb-2">Tampilan Bulanan</h3>
                         <p className="text-neutral-600 mb-4">Fitur tampilan bulanan akan segera hadir.</p>
                         <button className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark">

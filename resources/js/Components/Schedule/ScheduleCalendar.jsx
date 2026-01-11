@@ -1,5 +1,6 @@
 // resources/js/Components/Schedule/ScheduleCalendar.jsx
 import { useState, useEffect } from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 export default function ScheduleCalendar() {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -128,7 +129,7 @@ export default function ScheduleCalendar() {
                         onClick={handlePrevMonth}
                         className="p-2 rounded-lg hover:bg-neutral-100"
                     >
-                        <i className="fas fa-chevron-left"></i>
+                        <FaChevronLeft/>
                     </button>
                     <button
                         onClick={handleToday}
@@ -140,7 +141,7 @@ export default function ScheduleCalendar() {
                         onClick={handleNextMonth}
                         className="p-2 rounded-lg hover:bg-neutral-100"
                     >
-                        <i className="fas fa-chevron-right"></i>
+                        <FaChevronRight/>
                     </button>
                 </div>
             </div>

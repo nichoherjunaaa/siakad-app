@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'user_id',
         'student_number',
@@ -16,4 +17,19 @@ class Student extends Model
         'parent_id',
         'status'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
+
+    public function guardian()
+    {
+        return $this->belongsTo(Guardian::class);
+    }
 }
