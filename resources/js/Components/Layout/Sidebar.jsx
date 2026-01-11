@@ -10,6 +10,7 @@ import {
     FaCog,
     FaSignOutAlt,
     FaUserGraduate,
+    FaUserTie,
 } from 'react-icons/fa';
 
 export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
@@ -23,6 +24,7 @@ export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
         { name: 'Nilai', route: 'grades', icon: FaChartLine },
         { name: 'Tugas', route: 'assignments', icon: FaClipboardCheck },
         { name: 'Siswa', route: 'students', icon: FaUserGraduate},
+        { name: 'Guru', route: 'teachers', icon: FaUserTie},
         { name: 'Pengaturan', route: '#', icon: FaCog },
     ];
 

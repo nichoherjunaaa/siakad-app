@@ -8,6 +8,7 @@ use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TeachersController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/assignments', [AssignmentsController::class, 'index'])->name('assignments');
     Route::get('/classes', [ClassesController::class, 'index'])->name('classes');
     Route::get('/students', [StudentsController::class, 'index'])->name('students');
+    Route::get('/teachers', [TeachersController::class, 'index'])->name('teachers');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

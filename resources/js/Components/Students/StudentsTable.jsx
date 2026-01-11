@@ -1,6 +1,6 @@
 // resources/js/Components/Students/StudentsTable.jsx
 import { useState, useMemo } from 'react';
-
+import { FaEye, FaEdit, FaTrash, FaEnvelope, FaUsers, FaChevronLeft, FaChevronRight, FaDownload, FaUser, FaSearch, FaTimes } from 'react-icons/fa';
 export default function StudentsTable() {
     const [students] = useState([
         {
@@ -365,7 +365,7 @@ export default function StudentsTable() {
                             {filteredStudents.length} siswa ditemukan
                         </p>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                         {selectedStudents.length > 0 && (
                             <div className="flex items-center space-x-2">
@@ -376,14 +376,14 @@ export default function StudentsTable() {
                                     onClick={() => handleBulkAction('export')}
                                     className="px-3 py-2 text-sm border border-neutral-300 rounded-lg hover:bg-neutral-50"
                                 >
-                                    <i className="fas fa-download mr-1"></i>
+                                    <FaDownload />
                                     Export
                                 </button>
                                 <button
                                     onClick={() => handleBulkAction('delete')}
                                     className="px-3 py-2 text-sm bg-red-50 text-red-700 rounded-lg hover:bg-red-100"
                                 >
-                                    <i className="fas fa-trash mr-1"></i>
+                                    <FaTrash />
                                     Hapus
                                 </button>
                             </div>
@@ -402,7 +402,7 @@ export default function StudentsTable() {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                             />
-                            <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
+                            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400" />
                         </div>
                     </div>
 
@@ -421,7 +421,7 @@ export default function StudentsTable() {
                         <select
                             value={selectedStatus}
                             onChange={(e) => setSelectedStatus(e.target.value)}
-                            className="px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                            className="px-5 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                         >
                             <option value="all">Semua Status</option>
                             {statuses.map(status => (
@@ -437,9 +437,8 @@ export default function StudentsTable() {
                                 setSelectedClass('all');
                                 setSelectedStatus('all');
                             }}
-                            className="px-3 py-2 text-sm border border-neutral-300 rounded-lg hover:bg-neutral-50"
+                            className="px-5 py-2 text-sm border flex items-center border-neutral-300 rounded-lg hover:bg-neutral-50"
                         >
-                            <i className="fas fa-times mr-1"></i>
                             Reset
                         </button>
                     </div>
@@ -527,7 +526,7 @@ export default function StudentsTable() {
                     </thead>
                     <tbody className="divide-y divide-neutral-200">
                         {paginatedStudents.map((student) => (
-                            <tr 
+                            <tr
                                 key={student.id}
                                 className="hover:bg-neutral-50 group"
                             >
@@ -542,7 +541,7 @@ export default function StudentsTable() {
                                 <td className="p-4">
                                     <div className="flex items-center">
                                         <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3">
-                                            <i className={`fas fa-user text-primary`}></i>
+                                            <FaUser className="text-primary" />
                                         </div>
                                         <div>
                                             <div className="font-medium text-neutral-900">
@@ -578,7 +577,7 @@ export default function StudentsTable() {
                                 <td className="p-4">
                                     <div className="flex items-center">
                                         <div className="w-16 bg-neutral-100 rounded-full h-2 mr-3">
-                                            <div 
+                                            <div
                                                 className="h-2 bg-gradient-to-r from-green-500 to-blue-500 rounded-full"
                                                 style={{ width: `${student.averageScore}%` }}
                                             ></div>
@@ -591,7 +590,7 @@ export default function StudentsTable() {
                                 <td className="p-4">
                                     <div className="flex items-center">
                                         <div className="w-16 bg-neutral-100 rounded-full h-2 mr-3">
-                                            <div 
+                                            <div
                                                 className="h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
                                                 style={{ width: `${parseFloat(student.attendance)}%` }}
                                             ></div>
@@ -607,30 +606,24 @@ export default function StudentsTable() {
                                     </span>
                                 </td>
                                 <td className="p-4">
-                                    <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button 
+                                    <div className="flex items-center space-x-2">
+                                        <button
                                             className="p-2 text-neutral-600 hover:text-primary hover:bg-primary/10 rounded-lg"
                                             title="Lihat Detail"
                                         >
-                                            <i className="fas fa-eye"></i>
+                                            <FaEye />
                                         </button>
-                                        <button 
+                                        <button
                                             className="p-2 text-neutral-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg"
                                             title="Edit"
                                         >
-                                            <i className="fas fa-edit"></i>
+                                            <FaEdit />
                                         </button>
-                                        <button 
+                                        <button
                                             className="p-2 text-neutral-600 hover:text-red-600 hover:bg-red-50 rounded-lg"
                                             title="Hapus"
                                         >
-                                            <i className="fas fa-trash"></i>
-                                        </button>
-                                        <button 
-                                            className="p-2 text-neutral-600 hover:text-green-600 hover:bg-green-50 rounded-lg"
-                                            title="Kirim Pesan"
-                                        >
-                                            <i className="fas fa-envelope"></i>
+                                            <FaTrash />
                                         </button>
                                     </div>
                                 </td>
@@ -643,13 +636,13 @@ export default function StudentsTable() {
             {/* Empty State */}
             {filteredStudents.length === 0 && (
                 <div className="p-12 text-center">
-                    <i className="fas fa-users text-4xl text-neutral-300 mb-4"></i>
+                    <FaUsers className="text-4xl text-neutral-300 mb-4" />
                     <h3 className="text-lg font-medium text-neutral-700 mb-2">Tidak ada siswa</h3>
                     <p className="text-neutral-500">
                         {searchQuery ? 'Tidak ditemukan siswa dengan kriteria tersebut.' : 'Belum ada data siswa.'}
                     </p>
                     {searchQuery && (
-                        <button 
+                        <button
                             onClick={() => {
                                 setSearchQuery('');
                                 setSelectedClass('all');
@@ -672,20 +665,19 @@ export default function StudentsTable() {
                                 Menampilkan {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filteredStudents.length)} dari {filteredStudents.length} siswa
                             </p>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2">
                             <button
                                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                 disabled={currentPage === 1}
-                                className={`px-3 py-2 rounded-lg ${
-                                    currentPage === 1 
-                                        ? 'text-neutral-400 cursor-not-allowed' 
+                                className={`px-3 py-2 rounded-lg ${currentPage === 1
+                                        ? 'text-neutral-400 cursor-not-allowed'
                                         : 'text-neutral-700 hover:bg-neutral-100'
-                                }`}
+                                    }`}
                             >
-                                <i className="fas fa-chevron-left"></i>
+                                <FaChevronLeft />
                             </button>
-                            
+
                             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                                 let pageNum;
                                 if (totalPages <= 5) {
@@ -697,34 +689,32 @@ export default function StudentsTable() {
                                 } else {
                                     pageNum = currentPage - 2 + i;
                                 }
-                                
+
                                 return (
                                     <button
                                         key={pageNum}
                                         onClick={() => setCurrentPage(pageNum)}
-                                        className={`w-10 h-10 rounded-lg ${
-                                            currentPage === pageNum
+                                        className={`w-10 h-10 rounded-lg ${currentPage === pageNum
                                                 ? 'bg-primary text-white'
                                                 : 'text-neutral-700 hover:bg-neutral-100'
-                                        }`}
+                                            }`}
                                     >
                                         {pageNum}
                                     </button>
                                 );
                             })}
-                            
+
                             <button
                                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}
-                                className={`px-3 py-2 rounded-lg ${
-                                    currentPage === totalPages 
-                                        ? 'text-neutral-400 cursor-not-allowed' 
+                                className={`px-3 py-2 rounded-lg ${currentPage === totalPages
+                                        ? 'text-neutral-400 cursor-not-allowed'
                                         : 'text-neutral-700 hover:bg-neutral-100'
-                                }`}
+                                    }`}
                             >
-                                <i className="fas fa-chevron-right"></i>
+                                <FaChevronRight />
                             </button>
-                            
+
                             <select
                                 value={itemsPerPage}
                                 onChange={(e) => {
