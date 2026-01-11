@@ -1,5 +1,5 @@
 // resources/js/Pages/Students.jsx
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import StudentsHeader from '@/Components/Students/StudentsHeader';
 import StudentsTable from '@/Components/Students/StudentsTable';
@@ -7,6 +7,8 @@ import StudentStats from '@/Components/Students/StudentStats';
 import ClassDistribution from '@/Components/Students/ClassDistribution';
 
 export default function Students({ auth }) {
+    const { students } = usePage().props;
+    
     const userData = {
         role: 'guru', // Bisa diubah: 'admin', 'orangtua'
         name: 'Bu Sari, S.Pd.',
@@ -29,7 +31,7 @@ export default function Students({ auth }) {
             {/* Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                 <div className="lg:col-span-2">
-                    <StudentsTable />
+                    <StudentsTable students={students} />
                 </div>
                 <div className="space-y-6">
                     <StudentStats />

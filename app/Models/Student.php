@@ -15,6 +15,7 @@ class Student extends Model
         'full_name',
         'class_room_id',
         'parent_id',
+        'gender',
         'status'
     ];
 

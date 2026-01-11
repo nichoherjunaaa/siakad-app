@@ -1,201 +1,15 @@
 // resources/js/Components/Students/StudentsTable.jsx
-import { useState, useMemo } from 'react';
+import { usePage } from '@inertiajs/react';
+import { useState, useEffect, useMemo } from 'react';
 import { FaEye, FaEdit, FaTrash, FaEnvelope, FaUsers, FaChevronLeft, FaChevronRight, FaDownload, FaUser, FaSearch, FaTimes } from 'react-icons/fa';
-export default function StudentsTable() {
-    const [students] = useState([
-        {
-            id: 'SM2024001',
-            nis: '2024001',
-            name: 'Ahmad Rizki',
-            gender: 'male',
-            class: 'XII IPA 1',
-            birthDate: '2006-05-15',
-            birthPlace: 'Jakarta',
-            email: 'ahmad.rizki@student.sch.id',
-            phone: '081234567890',
-            address: 'Jl. Merdeka No. 123, Jakarta Pusat',
-            parentName: 'Budi Santoso',
-            parentPhone: '081234567891',
-            status: 'active',
-            joinDate: '2021-07-15',
-            averageScore: 85.5,
-            attendance: '95%',
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'SM2024002',
-            nis: '2024002',
-            name: 'Siti Nurhaliza',
-            gender: 'female',
-            class: 'XII IPA 1',
-            birthDate: '2006-08-22',
-            birthPlace: 'Bandung',
-            email: 'siti.nurhaliza@student.sch.id',
-            phone: '081234567892',
-            address: 'Jl. Asia Afrika No. 45, Bandung',
-            parentName: 'Herman Susanto',
-            parentPhone: '081234567893',
-            status: 'active',
-            joinDate: '2021-07-15',
-            averageScore: 92.0,
-            attendance: '97%',
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'SM2024003',
-            nis: '2024003',
-            name: 'Bambang Pratama',
-            gender: 'male',
-            class: 'XII IPA 1',
-            birthDate: '2006-03-10',
-            birthPlace: 'Surabaya',
-            email: 'bambang.pratama@student.sch.id',
-            phone: '081234567894',
-            address: 'Jl. Tunjungan No. 78, Surabaya',
-            parentName: 'Agus Wijaya',
-            parentPhone: '081234567895',
-            status: 'active',
-            joinDate: '2021-07-15',
-            averageScore: 78.3,
-            attendance: '88%',
-            lastActive: '2023-12-09'
-        },
-        {
-            id: 'SM2024004',
-            nis: '2024004',
-            name: 'Dewi Lestari',
-            gender: 'female',
-            class: 'XII IPA 1',
-            birthDate: '2006-11-30',
-            birthPlace: 'Yogyakarta',
-            email: 'dewi.lestari@student.sch.id',
-            phone: '081234567896',
-            address: 'Jl. Malioboro No. 12, Yogyakarta',
-            parentName: 'Rudi Hartono',
-            parentPhone: '081234567897',
-            status: 'active',
-            joinDate: '2021-07-15',
-            averageScore: 89.2,
-            attendance: '94%',
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'SM2024005',
-            nis: '2024005',
-            name: 'Rizky Maulana',
-            gender: 'male',
-            class: 'XII IPA 1',
-            birthDate: '2006-02-14',
-            birthPlace: 'Medan',
-            email: 'rizky.maulana@student.sch.id',
-            phone: '081234567898',
-            address: 'Jl. Gatot Subroto No. 56, Medan',
-            parentName: 'Surya Dharma',
-            parentPhone: '081234567899',
-            status: 'transferred',
-            joinDate: '2021-07-15',
-            transferDate: '2023-11-30',
-            averageScore: 76.8,
-            attendance: '85%',
-            lastActive: '2023-11-29'
-        },
-        {
-            id: 'SM2024006',
-            nis: '2024006',
-            name: 'Ani Wijaya',
-            gender: 'female',
-            class: 'XII IPA 2',
-            birthDate: '2006-07-18',
-            birthPlace: 'Semarang',
-            email: 'ani.wijaya@student.sch.id',
-            phone: '081234567800',
-            address: 'Jl. Pemuda No. 23, Semarang',
-            parentName: 'Joko Susilo',
-            parentPhone: '081234567801',
-            status: 'active',
-            joinDate: '2021-07-15',
-            averageScore: 91.5,
-            attendance: '96%',
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'SM2024007',
-            nis: '2024007',
-            name: 'Eko Prasetyo',
-            gender: 'male',
-            class: 'XII IPA 2',
-            birthDate: '2006-01-25',
-            birthPlace: 'Malang',
-            email: 'eko.prasetyo@student.sch.id',
-            phone: '081234567802',
-            address: 'Jl. Ijen No. 34, Malang',
-            parentName: 'Slamet Riyadi',
-            parentPhone: '081234567803',
-            status: 'active',
-            joinDate: '2021-07-15',
-            averageScore: 83.7,
-            attendance: '92%',
-            lastActive: '2023-12-09'
-        },
-        {
-            id: 'SM2024008',
-            nis: '2024008',
-            name: 'Maya Sari',
-            gender: 'female',
-            class: 'XII IPA 2',
-            birthDate: '2006-09-05',
-            birthPlace: 'Denpasar',
-            email: 'maya.sari@student.sch.id',
-            phone: '081234567804',
-            address: 'Jl. Hayam Wuruk No. 67, Denpasar',
-            parentName: 'Wayan Sudarma',
-            parentPhone: '081234567805',
-            status: 'active',
-            joinDate: '2021-07-15',
-            averageScore: 87.9,
-            attendance: '93%',
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'SM2024009',
-            nis: '2024009',
-            name: 'Hendra Kurniawan',
-            gender: 'male',
-            class: 'XII IPA 3',
-            birthDate: '2006-04-12',
-            birthPlace: 'Makassar',
-            email: 'hendra.kurniawan@student.sch.id',
-            phone: '081234567806',
-            address: 'Jl. Urip Sumoharjo No. 89, Makassar',
-            parentName: 'Andi Malik',
-            parentPhone: '081234567807',
-            status: 'active',
-            joinDate: '2021-07-15',
-            averageScore: 79.4,
-            attendance: '90%',
-            lastActive: '2023-12-08'
-        },
-        {
-            id: 'SM2024010',
-            nis: '2024010',
-            name: 'Linda Permata',
-            gender: 'female',
-            class: 'XII IPA 3',
-            birthDate: '2006-12-08',
-            birthPlace: 'Palembang',
-            email: 'linda.permata@student.sch.id',
-            phone: '081234567808',
-            address: 'Jl. Jenderal Sudirman No. 101, Palembang',
-            parentName: 'Roni Setiawan',
-            parentPhone: '081234567809',
-            status: 'dropout',
-            joinDate: '2021-07-15',
-            dropoutDate: '2023-10-15',
-            averageScore: 72.5,
-            attendance: '78%',
-            lastActive: '2023-10-14'
-        }
-    ]);
+export default function StudentsTable({ students: studentsFromServer }) {
+    const [students, setStudents] = useState(studentsFromServer || []);
+
+    useEffect(() => {
+        setStudents(studentsFromServer || []);
+        console.log(studentsFromServer);
+        
+    }, [studentsFromServer]);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedClass, setSelectedClass] = useState('all');
@@ -204,9 +18,8 @@ export default function StudentsTable() {
     const [sortDirection, setSortDirection] = useState('asc');
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 15;
 
-    // Get unique classes for filter
     const classes = useMemo(() => {
         return [...new Set(students.map(student => student.class))].sort();
     }, [students]);
@@ -240,32 +53,32 @@ export default function StudentsTable() {
         }
 
         // Apply sorting
-        filtered.sort((a, b) => {
-            let aValue = a[sortField];
-            let bValue = b[sortField];
+        // filtered.sort((a, b) => {
+        //     let aValue = a[sortField];
+        //     let bValue = b[sortField];
 
-            // Handle special sorting cases
-            if (sortField === 'name') {
-                aValue = a.name.toLowerCase();
-                bValue = b.name.toLowerCase();
-            }
+        //     // Handle special sorting cases
+        //     if (sortField === 'name') {
+        //         aValue = a.name.toLowerCase();
+        //         bValue = b.name.toLowerCase();
+        //     }
 
-            if (sortField === 'averageScore') {
-                aValue = parseFloat(a.averageScore);
-                bValue = parseFloat(b.averageScore);
-            }
+        //     if (sortField === 'averageScore') {
+        //         aValue = parseFloat(a.averageScore);
+        //         bValue = parseFloat(b.averageScore);
+        //     }
 
-            if (sortField === 'attendance') {
-                aValue = parseFloat(a.attendance);
-                bValue = parseFloat(b.attendance);
-            }
+        //     if (sortField === 'attendance') {
+        //         aValue = parseFloat(a.attendance);
+        //         bValue = parseFloat(b.attendance);
+        //     }
 
-            if (sortDirection === 'asc') {
-                return aValue > bValue ? 1 : -1;
-            } else {
-                return aValue < bValue ? 1 : -1;
-            }
-        });
+        //     if (sortDirection === 'asc') {
+        //         return aValue > bValue ? 1 : -1;
+        //     } else {
+        //         return aValue < bValue ? 1 : -1;
+        //     }
+        // });
 
         return filtered;
     }, [students, searchQuery, selectedClass, selectedStatus, sortField, sortDirection]);
@@ -407,7 +220,7 @@ export default function StudentsTable() {
                     </div>
 
                     <div className="flex items-center space-x-2">
-                        <select
+                        {/* <select
                             value={selectedClass}
                             onChange={(e) => setSelectedClass(e.target.value)}
                             className="px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
@@ -416,7 +229,7 @@ export default function StudentsTable() {
                             {classes.map(className => (
                                 <option key={className} value={className}>{className}</option>
                             ))}
-                        </select>
+                        </select> */}
 
                         <select
                             value={selectedStatus}
@@ -480,7 +293,7 @@ export default function StudentsTable() {
                                     )}
                                 </button>
                             </th>
-                            <th className="p-4 text-left">
+                            <th className="p-9 text-left">
                                 <button
                                     onClick={() => handleSort('class')}
                                     className="flex items-center font-medium text-neutral-700 hover:text-neutral-900"
@@ -493,28 +306,6 @@ export default function StudentsTable() {
                             </th>
                             <th className="p-4 text-left">
                                 <span className="font-medium text-neutral-700">Jenis Kelamin</span>
-                            </th>
-                            <th className="p-4 text-left">
-                                <button
-                                    onClick={() => handleSort('averageScore')}
-                                    className="flex items-center font-medium text-neutral-700 hover:text-neutral-900"
-                                >
-                                    Rata-rata Nilai
-                                    {sortField === 'averageScore' && (
-                                        <i className={`fas fa-arrow-${sortDirection === 'asc' ? 'up' : 'down'} ml-1`}></i>
-                                    )}
-                                </button>
-                            </th>
-                            <th className="p-4 text-left">
-                                <button
-                                    onClick={() => handleSort('attendance')}
-                                    className="flex items-center font-medium text-neutral-700 hover:text-neutral-900"
-                                >
-                                    Kehadiran
-                                    {sortField === 'attendance' && (
-                                        <i className={`fas fa-arrow-${sortDirection === 'asc' ? 'up' : 'down'} ml-1`}></i>
-                                    )}
-                                </button>
                             </th>
                             <th className="p-4 text-left">
                                 <span className="font-medium text-neutral-700">Status</span>
@@ -540,12 +331,9 @@ export default function StudentsTable() {
                                 </td>
                                 <td className="p-4">
                                     <div className="flex items-center">
-                                        <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3">
-                                            <FaUser className="text-primary" />
-                                        </div>
                                         <div>
                                             <div className="font-medium text-neutral-900">
-                                                {student.name}
+                                                {student.full_name}
                                             </div>
                                             <div className="text-sm text-neutral-600">
                                                 {student.email}
@@ -554,16 +342,14 @@ export default function StudentsTable() {
                                     </div>
                                 </td>
                                 <td className="p-4">
-                                    <div className="font-medium text-neutral-900">
-                                        {student.nis}
-                                    </div>
+
                                     <div className="text-sm text-neutral-600">
-                                        {student.id}
+                                        {student.student_number}
                                     </div>
                                 </td>
                                 <td className="p-4">
                                     <span className="font-medium text-neutral-900">
-                                        {student.class}
+                                        {student.class_room.grade_level}-{student.class_room.major}-{student.class_room.name}
                                     </span>
                                 </td>
                                 <td className="p-4">
@@ -571,32 +357,6 @@ export default function StudentsTable() {
                                         <i className={`${getGenderIcon(student.gender)} mr-2`}></i>
                                         <span className="text-neutral-700">
                                             {student.gender === 'male' ? 'Laki-laki' : 'Perempuan'}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td className="p-4">
-                                    <div className="flex items-center">
-                                        <div className="w-16 bg-neutral-100 rounded-full h-2 mr-3">
-                                            <div
-                                                className="h-2 bg-gradient-to-r from-green-500 to-blue-500 rounded-full"
-                                                style={{ width: `${student.averageScore}%` }}
-                                            ></div>
-                                        </div>
-                                        <span className="font-medium text-neutral-900">
-                                            {student.averageScore}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td className="p-4">
-                                    <div className="flex items-center">
-                                        <div className="w-16 bg-neutral-100 rounded-full h-2 mr-3">
-                                            <div
-                                                className="h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-                                                style={{ width: `${parseFloat(student.attendance)}%` }}
-                                            ></div>
-                                        </div>
-                                        <span className="font-medium text-neutral-900">
-                                            {student.attendance}
                                         </span>
                                     </div>
                                 </td>
@@ -671,8 +431,8 @@ export default function StudentsTable() {
                                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                 disabled={currentPage === 1}
                                 className={`px-3 py-2 rounded-lg ${currentPage === 1
-                                        ? 'text-neutral-400 cursor-not-allowed'
-                                        : 'text-neutral-700 hover:bg-neutral-100'
+                                    ? 'text-neutral-400 cursor-not-allowed'
+                                    : 'text-neutral-700 hover:bg-neutral-100'
                                     }`}
                             >
                                 <FaChevronLeft />
@@ -695,8 +455,8 @@ export default function StudentsTable() {
                                         key={pageNum}
                                         onClick={() => setCurrentPage(pageNum)}
                                         className={`w-10 h-10 rounded-lg ${currentPage === pageNum
-                                                ? 'bg-primary text-white'
-                                                : 'text-neutral-700 hover:bg-neutral-100'
+                                            ? 'bg-primary text-white'
+                                            : 'text-neutral-700 hover:bg-neutral-100'
                                             }`}
                                     >
                                         {pageNum}
@@ -708,8 +468,8 @@ export default function StudentsTable() {
                                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}
                                 className={`px-3 py-2 rounded-lg ${currentPage === totalPages
-                                        ? 'text-neutral-400 cursor-not-allowed'
-                                        : 'text-neutral-700 hover:bg-neutral-100'
+                                    ? 'text-neutral-400 cursor-not-allowed'
+                                    : 'text-neutral-700 hover:bg-neutral-100'
                                     }`}
                             >
                                 <FaChevronRight />

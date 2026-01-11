@@ -2,22 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Inertia\Inertia;
 
 class StudentsController extends Controller
 {
     public function index()
     {
-        $studentsData = [
-            'user' => [
-                'name' => 'Bu Sari, S.Pd.',
-                'role' => 'guru',
-                'class' => 'XII IPA 1',
-                'academicYear' => '2023/2024',
-                'semester' => 'Genap'
-            ]
-        ];
-
-        return Inertia::render('Students', $studentsData);
+        $students = Student::with(['classRoom', 'guardian', 'user'])->get();
+        return Inertia::render('Students', [
+            'students' => $students
+        ]);
     }
 }
