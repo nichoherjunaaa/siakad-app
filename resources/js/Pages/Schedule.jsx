@@ -8,15 +8,7 @@ import ClassInformation from '@/Components/Schedule/ClassInformation';
 import TeacherContacts from '@/Components/Schedule/TeacherContacts';
 
 export default function Schedule({ auth }) {
-    const userData = {
-        role: 'siswa', // Bisa diubah: 'guru', 'orangtua'
-        name: 'Ahmad Rizki',
-        id: 'SM2024001',
-        class: 'XII IPA 1',
-        room: 'Ruang XII IPA 1',
-        homeroomTeacher: 'Bu Sari, S.Pd.',
-        totalStudents: 32
-    };
+    const userData = auth.user;
 
     const academicYear = '2023/2024';
     const semester = 'Genap';

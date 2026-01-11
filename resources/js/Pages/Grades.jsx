@@ -26,13 +26,10 @@ export default function Grades({ auth }) {
         >
             <Head title="Nilai" />
 
-            {/* Page Header */}
             <GradesHeader user={userData} />
 
-            {/* Grades Summary */}
             <GradesSummary />
 
-            {/* Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
                 <div className="lg:col-span-2">
                     <GradesTable />
@@ -42,7 +39,6 @@ export default function Grades({ auth }) {
                 </div>
             </div>
 
-            {/* Charts and Statistics */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                 <ProgressChart />
                 <GradeStatistics />

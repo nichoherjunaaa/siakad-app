@@ -50,11 +50,11 @@ export default function RecentAssignments() {
 
     const getSubjectIcon = (subject) => {
         switch(subject.toLowerCase()) {
-            case 'matematika': return FaCalculator;
-            case 'fisika': return FaAtom;
-            case 'kimia': return FaFlask;
-            case 'biologi': return FaDna;
-            default: return FaBook;
+            case 'matematika': return FaTasks;
+            case 'fisika': return FaTasks;
+            case 'kimia': return FaTasks;
+            case 'biologi': return FaTasks;
+            default: return FaTasks;
         }
     };
 

@@ -9,6 +9,7 @@ import {
     FaBell,
     FaCog,
     FaSignOutAlt,
+    FaUserGraduate,
 } from 'react-icons/fa';
 
 export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
@@ -17,10 +18,11 @@ export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
     const navigation = [
         { name: 'Beranda', route: 'dashboard', icon: FaHome },
         { name: 'Jadwal', route: 'schedule', icon: FaCalendarAlt },
+        {name : 'Kelas', route: 'classes', icon:FaBook },
         { name: 'Materi', route: 'materials', icon: FaBook },
         { name: 'Nilai', route: 'grades', icon: FaChartLine },
-        { name: 'Tugas', route: '#', icon: FaClipboardCheck },
-        { name: 'Notifikasi', route: '#', icon: FaBell, badge: 3 },
+        { name: 'Tugas', route: 'assignments', icon: FaClipboardCheck },
+        { name: 'Siswa', route: 'students', icon: FaUserGraduate},
         { name: 'Pengaturan', route: '#', icon: FaCog },
     ];
 
@@ -105,12 +107,6 @@ function SidebarContent({ user, navigation, handleLogout }) {
                                 >
                                     <item.icon className="w-5 h-5" />
                                     <span>{item.name}</span>
-
-                                    {item.badge && (
-                                        <span className="ml-auto notification-badge bg-danger text-white">
-                                            {item.badge}
-                                        </span>
-                                    )}
                                 </Link>
                             </li>
                         );

@@ -8,15 +8,11 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        // You can pass schedule data here
+        $user = auth()->user()->getAttributes();
         $scheduleData = [
             'academic_year' => '2023/2024',
             'semester' => 'Genap',
-            'user' => [
-                'name' => 'Ahmad Rizki',
-                'role' => 'siswa',
-                'class' => 'XII IPA 1'
-            ]
+            'user' => $user,
         ];
 
         return inertia('Schedule', compact('scheduleData'));
