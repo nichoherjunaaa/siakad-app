@@ -8,6 +8,7 @@ use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\SubjectDetailController;
 use App\Http\Controllers\TeachersController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/classes', [ClassesController::class, 'index'])->name('classes');
     Route::get('/students', [StudentsController::class, 'index'])->name('students');
     Route::get('/teachers', [TeachersController::class, 'index'])->name('teachers');
+    Route::get('/classes/{subject}', [SubjectDetailController::class, 'show'])->name('subject.detail');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -38,4 +40,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
