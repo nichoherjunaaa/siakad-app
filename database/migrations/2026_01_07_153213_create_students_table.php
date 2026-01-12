@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('full_name');
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->foreignId('guardian_id')->nullable()->constrained()->nullOnDelete();
-            $table->enum('status', ['active', 'inactive', 'graduated', 'transferred'])->default('active');
+            $table->enum('status', ['active', 'dropout', 'graduated', 'transferred'])->default('active');
             $table->timestamps();
         });
     }

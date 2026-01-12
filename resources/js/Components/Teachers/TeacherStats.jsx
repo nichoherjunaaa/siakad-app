@@ -1,17 +1,42 @@
 // resources/js/Components/Teachers/TeacherStats.jsx
 import { useState } from 'react';
 
-export default function TeacherStats() {
+export default function TeacherStats({teachers}) {
+
+    const maleTeachers = teachers.filter(
+        teacher => teacher.user.gender === 'male'
+    ).length
+
+    const femaleTeachers = teachers.filter(
+        teacher => teacher.user.gender === 'female'
+    ).length
+
+    const activeTeachers = teachers.filter(
+        teacher => teacher.status === 'active'
+    ).length
+
+    const onLeaveTeachers = teachers.filter(
+        teacher => teacher.status === 'onLeave'
+    ).length
+
+    const retiredTeachers = teachers.filter(
+        teacher => teacher.status === 'retired'
+    ).length
+
+    const resignedTeachers = teachers.filter(
+        teacher => teacher.status === 're'
+    ).length
+
     const [stats] = useState({
         byGender: {
-            male: 25,
-            female: 23
+            male: maleTeachers,
+            female: femaleTeachers
         },
         byStatus: {
-            active: 45,
-            onLeave: 3,
-            retired: 2,
-            resigned: 1
+            active: activeTeachers,
+            onLeave: onLeaveTeachers,
+            retired: retiredTeachers,
+            resigned: resignedTeachers
         },
         byExperience: {
             junior: 15, // 1-5 tahun

@@ -1,18 +1,36 @@
 // resources/js/Components/Teachers/TeachersHeader.jsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { FaAward, FaChalkboardTeacher, FaFileExport, FaFileImport, FaMars, FaUserCheck, FaUserPlus, FaVenus } from 'react-icons/fa';
 
-export default function TeachersHeader({ user }) {
+export default function TeachersHeader({ user, teachers }) {
+    const [teachersData, setTeachers] = useState(teachers)
     const [selectedDepartment, setSelectedDepartment] = useState('all');
     const [selectedStatus, setSelectedStatus] = useState('active');
 
+    const femaleTeachers = teachers.filter(
+        teacher => teacher.user.gender === 'female'
+    ).length
+
+    const maleTeachers = teachers.filter(
+        teacher => teacher.user.gender === 'male'
+    ).length
+
+    const activeTeachers = teachers.filter(
+        teacher => teacher.status === 'active'
+    ).length
+
+    const onLeaveTeachers = teachers.filter(
+        teacher => teacher.status === 'onLeave'
+    ).length
+
+    const teachersCount = teachers.length
+
     const stats = {
-        totalTeachers: 48,
-        activeTeachers: 45,
-        onLeave: 3,
-        certified: 32,
-        male: 25,
-        female: 23,
-        averageExperience: '8.5 tahun'
+        totalTeachers: teachersCount,
+        activeTeachers: activeTeachers,
+        onLeave: onLeaveTeachers,
+        male: maleTeachers,
+        female: femaleTeachers,
     };
 
     const departments = [
@@ -67,39 +85,32 @@ export default function TeachersHeader({ user }) {
                         onClick={handleImportTeachers}
                         className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 flex items-center"
                     >
-                        <i className="fas fa-file-import text-blue-500 mr-2"></i>
+                        <FaFileImport className='text-blue-500 mr-2'/>
                         Import
                     </button>
                     <button
                         onClick={handleExportTeachers}
                         className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 flex items-center"
                     >
-                        <i className="fas fa-file-export text-green-500 mr-2"></i>
+                        <FaFileExport className='text-green-500 mr-2'/>
                         Export
-                    </button>
-                    <button
-                        onClick={handleScheduleMeeting}
-                        className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 flex items-center"
-                    >
-                        <i className="fas fa-calendar-plus text-purple-500 mr-2"></i>
-                        Rapat
                     </button>
                     <button
                         onClick={handleAddTeacher}
                         className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark flex items-center"
                     >
-                        <i className="fas fa-user-plus mr-2"></i>
+                        <FaUserPlus className='mr-2'/>
                         Tambah Guru
                     </button>
                 </div>
             </div>
 
             {/* Stats Overview */}
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
                 <div className="col-span-2 bg-gradient-to-r from-primary to-secondary rounded-xl p-4 text-white">
                     <div className="flex items-center">
                         <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-chalkboard-teacher text-xl"></i>
+                            <FaChalkboardTeacher className='text-xl'/>
                         </div>
                         <div>
                             <div className="text-2xl font-bold">{stats.totalTeachers}</div>
@@ -111,7 +122,7 @@ export default function TeachersHeader({ user }) {
                 <div className="bg-green-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-user-check text-green-600"></i>
+                            <FaUserCheck className='text-green-600'/>
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">
@@ -122,24 +133,10 @@ export default function TeachersHeader({ user }) {
                     </div>
                 </div>
 
-                <div className="bg-blue-50 p-4 rounded-xl">
-                    <div className="flex items-center">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-award text-blue-600"></i>
-                        </div>
-                        <div>
-                            <div className="text-xl font-bold text-neutral-900">
-                                {stats.certified}
-                            </div>
-                            <div className="text-sm text-neutral-600">Bersertifikat</div>
-                        </div>
-                    </div>
-                </div>
-
                 <div className="bg-pink-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-venus text-pink-600"></i>
+                            <FaVenus className='text-pink-600'/>
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">
@@ -153,7 +150,7 @@ export default function TeachersHeader({ user }) {
                 <div className="bg-blue-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-mars text-blue-600"></i>
+                            <FaMars className='text-blue-600'/>
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">

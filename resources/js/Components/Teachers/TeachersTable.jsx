@@ -3,11 +3,11 @@ import { useState, useMemo, useEffect } from 'react';
 import { FaCalendarAlt, FaChalkboard, FaDownload, FaEdit, FaEnvelope, FaEye, FaSearch, FaTimes } from 'react-icons/fa';
 
 export default function TeachersTable({ teachers: teachersFromServer }) {
-    console.log(teachersFromServer);
     const [teachers, setTeachers] = useState(teachersFromServer || [])
 
     useEffect(() => {
-        setTeachers(teachersFromServer )
+        setTeachers(teachersFromServer)
+        // console.log(femaleCount);
     }, [teachersFromServer])
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -19,6 +19,7 @@ export default function TeachersTable({ teachers: teachersFromServer }) {
     const [selectedTeachers, setSelectedTeachers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [femaleTeachers, setFemaleTeachers] = useState(0);
 
     // Get unique values for filters
     const departments = useMemo(() => {
@@ -217,14 +218,14 @@ export default function TeachersTable({ teachers: teachersFromServer }) {
                                     onClick={() => handleBulkAction('export')}
                                     className="px-3 py-2 text-sm border border-neutral-300 rounded-lg hover:bg-neutral-50"
                                 >
-                                    <FaDownload className='mr-1'/>
+                                    <FaDownload className='mr-1' />
                                     Export
                                 </button>
                                 <button
                                     onClick={() => handleBulkAction('message')}
                                     className="px-3 py-2 text-sm bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100"
                                 >
-                                    <FaEnvelope className='mr-1'/>
+                                    <FaEnvelope className='mr-1' />
                                     Kirim Pesan
                                 </button>
                             </div>
@@ -243,7 +244,7 @@ export default function TeachersTable({ teachers: teachersFromServer }) {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                             />
-                            <FaSearch className='absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400'/>
+                            <FaSearch className='absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400' />
                         </div>
                     </div>
 
@@ -383,16 +384,6 @@ export default function TeachersTable({ teachers: teachersFromServer }) {
                                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(teacher.status)}`}>
                                                 {getStatusLabel(teacher.status)}
                                             </span>
-                                            {teacher.status === 'onLeave' && teacher.leaveReason && (
-                                                <div className="text-xs text-neutral-500">
-                                                    {teacher.leaveReason}
-                                                </div>
-                                            )}
-                                            {teacher.status === 'retired' && teacher.retirementDate && (
-                                                <div className="text-xs text-neutral-500">
-                                                    Pensiun: {formatDate(teacher.retirementDate)}
-                                                </div>
-                                            )}
                                         </div>
                                     </td>
                                     <td className="p-4">
@@ -401,19 +392,19 @@ export default function TeachersTable({ teachers: teachersFromServer }) {
                                                 className="p-2 text-neutral-600 hover:text-primary hover:bg-primary/10 rounded-lg"
                                                 title="Lihat Detail"
                                             >
-                                                <FaEye/>
+                                                <FaEye />
                                             </button>
                                             <button
                                                 className="p-2text-neutral-600 hover:text-primary hover:bg-blue-50 rounded-lg"
                                                 title="Edit"
                                             >
-                                                <FaEdit/>
+                                                <FaEdit />
                                             </button>
                                             <button
                                                 className="p-2 text-neutral-600 hover:text-primary hover:bg-blue-50 rounded-lg"
                                                 title="Jadwal"
                                             >
-                                                <FaCalendarAlt/>
+                                                <FaCalendarAlt />
                                             </button>
                                         </div>
                                     </td>

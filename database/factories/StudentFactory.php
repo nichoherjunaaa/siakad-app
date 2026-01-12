@@ -31,7 +31,7 @@ class StudentFactory extends Factory
             'guardian_id' => Guardian::factory(),
             'status' => fake()->randomElement([
                 'active',
-                'inactive',
+                'dropout',
                 'graduated',
                 'transferred'
             ]),
