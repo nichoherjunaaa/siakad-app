@@ -18,7 +18,7 @@ export default function TeachersTable({ teachers: teachersFromServer }) {
     const [sortDirection, setSortDirection] = useState('asc');
     const [selectedTeachers, setSelectedTeachers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [itemsPerPage, setItemsPerPage] = useState(15);
     const [femaleTeachers, setFemaleTeachers] = useState(0);
 
     // Get unique values for filters
@@ -334,9 +334,10 @@ export default function TeachersTable({ teachers: teachersFromServer }) {
                                     )}
                                 </button>
                             </th>
-                            <th className="p-4 text-left">
+                            <th className="p-4 text-left w-40">
                                 <span className="font-medium text-neutral-700">Status</span>
                             </th>
+
                             <th className="p-4 text-left">
                                 <span className="font-medium text-neutral-700">Aksi</span>
                             </th>
@@ -379,11 +380,14 @@ export default function TeachersTable({ teachers: teachersFromServer }) {
                                             {teacher.primary_subject}
                                         </span>
                                     </td>
-                                    <td className="p-4">
+                                    <td className="p-4 w-40">
                                         <div className="space-y-1">
-                                            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(teacher.status)}`}>
+                                            <span
+                                                className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${getStatusColor(teacher.status)}`}
+                                            >
                                                 {getStatusLabel(teacher.status)}
                                             </span>
+
                                         </div>
                                     </td>
                                     <td className="p-4">

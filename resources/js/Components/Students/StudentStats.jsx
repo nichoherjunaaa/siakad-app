@@ -1,89 +1,57 @@
 // resources/js/Components/Students/StudentStats.jsx
-import { useState } from 'react';
 
-export default function StudentStats() {
-    const [stats] = useState({
-        byGender: {
-            male: 165,
-            female: 155
-        },
-        byStatus: {
-            active: 315,
-            graduated: 120,
-            transferred: 15,
-            dropout: 5
-        },
-        byClassLevel: {
-            'XII': 160,
-            'XI': 140,
-            'X': 100
-        },
-        academicPerformance: {
-            excellent: 45,
-            good: 120,
-            average: 110,
-            poor: 25
-        },
-        attendance: {
-            excellent: '85%',
-            average: '92%',
-            low: '78%'
-        }
-    });
+export default function StudentStats({ students = [] }) {
+    // ====== BY GENDER ======
+    const male = students.filter(s => s.user?.gender === 'male').length;
+    const female = students.filter(s => s.user?.gender === 'female').length;
+    const totalStudents = male + female;
 
-    const getStatusColor = (status) => {
-        const colors = {
-            active: 'bg-green-500',
-            graduated: 'bg-blue-500',
-            transferred: 'bg-yellow-500',
-            dropout: 'bg-red-500'
-        };
-        return colors[status] || 'bg-gray-500';
+    // ====== BY STATUS ======
+    const byStatus = {
+        active: students.filter(s => s.status === 'active').length,
+        graduated: students.filter(s => s.status === 'graduated').length,
+        transferred: students.filter(s => s.status === 'transferred').length,
+        dropout: students.filter(s => s.status === 'dropout').length,
     };
 
-    const getStatusLabel = (status) => {
-        const labels = {
-            active: 'Aktif',
-            graduated: 'Lulus',
-            transferred: 'Pindah',
-            dropout: 'Drop Out'
-        };
-        return labels[status] || status;
+    // ====== BY CLASS LEVEL ======
+    const byClassLevel = {
+        X: students.filter(s => s.class_room?.grade_level === 'X').length,
+        XI: students.filter(s => s.class_room?.grade_level === 'XI').length,
+        XII: students.filter(s => s.class_room?.grade_level === 'XII').length,
     };
 
-    const getPerformanceColor = (performance) => {
-        const colors = {
-            excellent: 'bg-green-500',
-            good: 'bg-blue-500',
-            average: 'bg-yellow-500',
-            poor: 'bg-red-500'
-        };
-        return colors[performance] || 'bg-gray-500';
-    };
+    const getStatusColor = (status) => ({
+        active: 'bg-green-500',
+        graduated: 'bg-blue-500',
+        transferred: 'bg-yellow-500',
+        dropout: 'bg-red-500',
+    }[status] || 'bg-gray-500');
 
-    const getPerformanceLabel = (performance) => {
-        const labels = {
-            excellent: 'Sangat Baik (90+)',
-            good: 'Baik (80-89)',
-            average: 'Cukup (70-79)',
-            poor: 'Perlu Bimbingan (<70)'
-        };
-        return labels[performance] || performance;
-    };
+    const getStatusLabel = (status) => ({
+        active: 'Aktif',
+        graduated: 'Lulus',
+        transferred: 'Pindah',
+        dropout: 'Drop Out',
+    }[status] || status);
 
-    const totalStudents = stats.byGender.male + stats.byGender.female;
+    const totalStatus = Object.values(byStatus).reduce((a, b) => a + b, 0);
 
     return (
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200">
-            <h3 className="text-lg font-bold text-neutral-900 mb-6">Statistik Siswa</h3>
+            <h3 className="text-lg font-bold text-neutral-900 mb-6">
+                Statistik Siswa
+            </h3>
 
-            {/* Gender Distribution */}
+            {/* ===== GENDER DISTRIBUTION ===== */}
             <div className="mb-6">
-                <h4 className="font-medium text-neutral-900 mb-4">Distribusi Gender</h4>
-                <div className="flex items-center space-x-4">
+                <h4 className="font-medium text-neutral-900 mb-4">
+                    Distribusi Gender
+                </h4>
+
+                <div className="flex items-center space-x-6">
                     <div className="relative w-32 h-32">
-                        <svg className="w-full h-full" viewBox="0 0 100 100">
-                            {/* Male slice */}
+                        <svg viewBox="0 0 100 100" className="w-full h-full">
                             <circle
                                 cx="50"
                                 cy="50"
@@ -91,10 +59,9 @@ export default function StudentStats() {
                                 fill="none"
                                 stroke="#3b82f6"
                                 strokeWidth="10"
-                                strokeDasharray={`${(stats.byGender.male / totalStudents) * 283} 283`}
+                                strokeDasharray={`${(male / totalStudents) * 283} 283`}
                                 transform="rotate(-90 50 50)"
                             />
-                            {/* Female slice */}
                             <circle
                                 cx="50"
                                 cy="50"
@@ -102,114 +69,77 @@ export default function StudentStats() {
                                 fill="none"
                                 stroke="#ec4899"
                                 strokeWidth="10"
-                                strokeDasharray={`${(stats.byGender.female / totalStudents) * 283} ${(stats.byGender.male / totalStudents) * 283}`}
-                                transform={`rotate(${(stats.byGender.male / totalStudents) * 360 - 90} 50 50)`}
+                                strokeDasharray={`${(female / totalStudents) * 283} 283`}
+                                transform={`rotate(${(male / totalStudents) * 360 - 90} 50 50)`}
                             />
                         </svg>
+
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <div className="text-2xl font-bold text-neutral-900">{totalStudents}</div>
-                            <div className="text-sm text-neutral-600">Total</div>
+                            <span className="text-2xl font-bold">
+                                {totalStudents}
+                            </span>
+                            <span className="text-sm text-neutral-600">
+                                Total
+                            </span>
                         </div>
                     </div>
-                    <div className="flex-1">
-                        <div className="space-y-3">
-                            <div className="flex items-center justify-between">
+
+                    <div className="space-y-3 flex-1">
+                        {[
+                            { label: 'Laki-laki', value: male, color: 'bg-blue-500' },
+                            { label: 'Perempuan', value: female, color: 'bg-pink-500' },
+                        ].map(item => (
+                            <div key={item.label} className="flex justify-between">
                                 <div className="flex items-center">
-                                    <div className="w-3 h-3 bg-blue-500 rounded-sm mr-2"></div>
-                                    <span className="text-sm text-neutral-700">Laki-laki</span>
+                                    <div className={`w-3 h-3 ${item.color} mr-2`} />
+                                    <span className="text-sm">{item.label}</span>
                                 </div>
                                 <div className="text-right">
-                                    <div className="font-medium text-neutral-900">{stats.byGender.male}</div>
+                                    <div className="font-medium">{item.value}</div>
                                     <div className="text-xs text-neutral-500">
-                                        {((stats.byGender.male / totalStudents) * 100).toFixed(1)}%
+                                        {totalStudents
+                                            ? ((item.value / totalStudents) * 100).toFixed(1)
+                                            : 0}
+                                        %
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center">
-                                    <div className="w-3 h-3 bg-pink-500 rounded-sm mr-2"></div>
-                                    <span className="text-sm text-neutral-700">Perempuan</span>
-                                </div>
-                                <div className="text-right">
-                                    <div className="font-medium text-neutral-900">{stats.byGender.female}</div>
-                                    <div className="text-xs text-neutral-500">
-                                        {((stats.byGender.female / totalStudents) * 100).toFixed(1)}%
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
 
-            {/* Status Distribution */}
-            <div className="mb-6">
-                <h4 className="font-medium text-neutral-900 mb-4">Distribusi Status</h4>
+            {/* ===== STATUS DISTRIBUTION ===== */}
+            <div>
+                <h4 className="font-medium text-neutral-900 mb-4">
+                    Distribusi Status
+                </h4>
+
                 <div className="space-y-3">
-                    {Object.entries(stats.byStatus).map(([status, count]) => (
+                    {Object.entries(byStatus).map(([status, count]) => (
                         <div key={status}>
                             <div className="flex justify-between text-sm mb-1">
                                 <div className="flex items-center">
-                                    <div className={`w-3 h-3 ${getStatusColor(status)} rounded-sm mr-2`}></div>
-                                    <span className="text-neutral-700">{getStatusLabel(status)}</span>
+                                    <div
+                                        className={`w-3 h-3 ${getStatusColor(status)} mr-2`}
+                                    />
+                                    <span>{getStatusLabel(status)}</span>
                                 </div>
-                                <span className="font-medium text-neutral-900">{count}</span>
+                                <span className="font-medium">{count}</span>
                             </div>
-                            <div className="w-full bg-neutral-200 rounded-full h-2">
-                                <div 
+
+                            <div className="w-full bg-neutral-200 h-2 rounded-full">
+                                <div
                                     className={`h-2 rounded-full ${getStatusColor(status)}`}
-                                    style={{ 
-                                        width: `${(count / Object.values(stats.byStatus).reduce((a, b) => a + b, 0)) * 100}%` 
+                                    style={{
+                                        width: totalStatus
+                                            ? `${(count / totalStatus) * 100}%`
+                                            : '0%',
                                     }}
-                                ></div>
+                                />
                             </div>
                         </div>
                     ))}
-                </div>
-            </div>
-
-            {/* Academic Performance */}
-            <div>
-                <h4 className="font-medium text-neutral-900 mb-4">Performance Akademik</h4>
-                <div className="space-y-3">
-                    {Object.entries(stats.academicPerformance).map(([performance, count]) => (
-                        <div key={performance}>
-                            <div className="flex justify-between text-sm mb-1">
-                                <div className="flex items-center">
-                                    <div className={`w-3 h-3 ${getPerformanceColor(performance)} rounded-sm mr-2`}></div>
-                                    <span className="text-neutral-700">{getPerformanceLabel(performance)}</span>
-                                </div>
-                                <span className="font-medium text-neutral-900">{count}</span>
-                            </div>
-                            <div className="w-full bg-neutral-200 rounded-full h-2">
-                                <div 
-                                    className={`h-2 rounded-full ${getPerformanceColor(performance)}`}
-                                    style={{ 
-                                        width: `${(count / Object.values(stats.academicPerformance).reduce((a, b) => a + b, 0)) * 100}%` 
-                                    }}
-                                ></div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Attendance Summary */}
-            <div className="mt-6 pt-6 border-t border-neutral-200">
-                <h4 className="font-medium text-neutral-900 mb-3">Rata-rata Kehadiran</h4>
-                <div className="grid grid-cols-3 gap-2">
-                    <div className="text-center p-2 bg-green-50 rounded-lg">
-                        <div className="text-lg font-bold text-green-700">{stats.attendance.excellent}</div>
-                        <div className="text-xs text-neutral-600">Tinggi</div>
-                    </div>
-                    <div className="text-center p-2 bg-yellow-50 rounded-lg">
-                        <div className="text-lg font-bold text-yellow-700">{stats.attendance.average}</div>
-                        <div className="text-xs text-neutral-600">Sedang</div>
-                    </div>
-                    <div className="text-center p-2 bg-red-50 rounded-lg">
-                        <div className="text-lg font-bold text-red-700">{stats.attendance.low}</div>
-                        <div className="text-xs text-neutral-600">Rendah</div>
-                    </div>
                 </div>
             </div>
         </div>

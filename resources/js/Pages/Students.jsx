@@ -26,7 +26,7 @@ export default function Students({ auth }) {
             <Head title="Siswa" />
 
             {/* Page Header */}
-            <StudentsHeader user={userData} />
+            <StudentsHeader user={userData} students={students} />
 
             {/* Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
@@ -34,8 +34,8 @@ export default function Students({ auth }) {
                     <StudentsTable students={students} />
                 </div>
                 <div className="space-y-6">
-                    <StudentStats />
-                    <ClassDistribution />
+                    <StudentStats students={students} />
+                    {/* <ClassDistribution /> */}
                 </div>
             </div>
         </DashboardLayout>

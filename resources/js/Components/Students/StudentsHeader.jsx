@@ -2,22 +2,29 @@
 import { useState } from 'react';
 import { FaFile, FaFileExport, FaFilter, FaMars, FaSyncAlt, FaUserCheck, FaUserGraduate, FaUserPlus, FaUsers, FaVenus } from 'react-icons/fa';
 
-export default function StudentsHeader({ user }) {
+export default function StudentsHeader({ user, students }) {
     const [selectedClass, setSelectedClass] = useState('all'); // 'all', 'XII IPA 1', 'XII IPA 2', etc.
     const [academicYear, setAcademicYear] = useState('2023/2024');
 
+    const studentsCount = students.length
+
+    const activeStudents = students.filter(student=>student.status === 'active').length
+    const maleStudents = students.filter(student=>student.user.gender === 'male').length
+    const femaleStudents = students.filter(student=>student.user.gender === 'female').length
+    const graduatedStudents = students.filter(student=>student.status === 'graduated').length
+
     const stats = {
-        totalStudents: 320,
-        activeStudents: 315,
+        totalStudents: studentsCount,
+        activeStudents: activeStudents,
         graduated: 120,
         newStudents: 45,
-        male: 165,
-        female: 155
+        male: maleStudents,
+        female: femaleStudents
     };
 
     const classes = [
         'XII IPA 1',
-        'XII IPA 2', 
+        'XII IPA 2',
         'XII IPA 3',
         'XII IPS 1',
         'XII IPS 2',
@@ -90,7 +97,7 @@ export default function StudentsHeader({ user }) {
                 <div className="col-span-2 bg-gradient-to-r from-primary to-secondary rounded-xl p-4 text-white">
                     <div className="flex items-center">
                         <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                            <FaUsers className="text-xl"/>
+                            <FaUsers className="text-xl" />
                         </div>
                         <div>
                             <div className="text-2xl font-bold">{stats.totalStudents}</div>
@@ -98,11 +105,11 @@ export default function StudentsHeader({ user }) {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="bg-green-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                            <FaUserCheck className="text-green-600"/>
+                            <FaUserCheck className="text-green-600" />
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">
@@ -116,7 +123,7 @@ export default function StudentsHeader({ user }) {
                 <div className="bg-blue-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                            <FaUserGraduate className="text-blue-600"/>
+                            <FaUserGraduate className="text-blue-600" />
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">
@@ -130,7 +137,7 @@ export default function StudentsHeader({ user }) {
                 <div className="bg-pink-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center mr-3">
-                            <FaVenus className="text-pink-600"/>
+                            <FaVenus className="text-pink-600" />
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">
@@ -144,7 +151,7 @@ export default function StudentsHeader({ user }) {
                 <div className="bg-blue-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                            <FaMars className="text-blue-600"/>
+                            <FaMars className="text-blue-600" />
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">

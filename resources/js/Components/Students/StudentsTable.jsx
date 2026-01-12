@@ -8,7 +8,7 @@ export default function StudentsTable({ students: studentsFromServer }) {
     useEffect(() => {
         setStudents(studentsFromServer || []);
         console.log(studentsFromServer);
-        
+
     }, [studentsFromServer]);
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -360,8 +360,10 @@ export default function StudentsTable({ students: studentsFromServer }) {
                                         </span>
                                     </div>
                                 </td>
-                                <td className="p-4">
-                                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(student.status)}`}>
+                                <td className="p-4 w-34">
+                                    <span
+                                        className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${getStatusColor(student.status)}`}
+                                    >
                                         {getStatusLabel(student.status)}
                                     </span>
                                 </td>

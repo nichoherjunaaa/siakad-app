@@ -29,7 +29,7 @@ export default function DashboardLayout({ children, user }) {
                 <div className="flex-1 flex flex-col min-h-screen md:ml-64">
                     {/* Header */}
                     <Header
-                        setSidebarOpen={setSidebarOpen}
+                        onMenuClick={() => setSidebarOpen(true)}
                         userName={user.name}
                     />
 
