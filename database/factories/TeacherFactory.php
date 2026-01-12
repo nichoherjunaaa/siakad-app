@@ -36,6 +36,7 @@ class TeacherFactory extends Factory
                 'Geografi',
                 'Ekonomi',
             ]),
+            'status' => fake()->randomElement(['active', 'leave', 'inactive'])
         ];
     }
 }

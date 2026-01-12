@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('employee_number')->unique();
             $table->string('full_name');
             $table->string('primary_subject');
+            $table->enum('status', ['active', 'leave', 'inactive']);
             $table->timestamps();
         });
     }

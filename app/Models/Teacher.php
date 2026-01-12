@@ -13,5 +13,10 @@ class Teacher extends Model
         'employee_number',
         'full_name',
         'primary_subject',
+        'status'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

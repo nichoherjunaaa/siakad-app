@@ -1,263 +1,14 @@
 // resources/js/Components/Teachers/TeachersTable.jsx
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { FaCalendarAlt, FaChalkboard, FaDownload, FaEdit, FaEnvelope, FaEye, FaSearch, FaTimes } from 'react-icons/fa';
 
-export default function TeachersTable() {
-    const [teachers] = useState([
-        {
-            id: 'GRU2024001',
-            nip: '198305152006041001',
-            name: 'Bu Sari, S.Pd.',
-            gender: 'female',
-            birthDate: '1983-05-15',
-            birthPlace: 'Jakarta',
-            email: 'sari.matematika@sekolah.sch.id',
-            phone: '081234567890',
-            address: 'Jl. Merdeka No. 123, Jakarta Pusat',
-            department: 'Matematika',
-            position: 'Guru Mata Pelajaran',
-            status: 'active',
-            joinDate: '2006-07-01',
-            experience: '17 tahun',
-            education: 'S1 Pendidikan Matematika',
-            certification: 'Sertifikasi Guru',
-            certificationYear: '2010',
-            classes: ['XII IPA 1', 'XII IPA 2'],
-            subjects: ['Matematika', 'Matematika Lanjutan'],
-            schedule: 'Senin-Rabu, 07:30-14:30',
-            office: 'Guru-101',
-            rating: 4.8,
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'GRU2024002',
-            nip: '197808222003021002',
-            name: 'Pak Budi, M.Pd.',
-            gender: 'male',
-            birthDate: '1978-08-22',
-            birthPlace: 'Bandung',
-            email: 'budi.fisika@sekolah.sch.id',
-            phone: '081234567891',
-            address: 'Jl. Asia Afrika No. 45, Bandung',
-            department: 'Fisika',
-            position: 'Kepala Lab Fisika',
-            status: 'active',
-            joinDate: '2003-02-01',
-            experience: '20 tahun',
-            education: 'S2 Pendidikan Fisika',
-            certification: 'Sertifikasi Guru',
-            certificationYear: '2009',
-            classes: ['XII IPA 1', 'XI IPA 1'],
-            subjects: ['Fisika', 'Fisika Terapan'],
-            schedule: 'Selasa-Kamis, 08:00-15:00',
-            office: 'Lab-102',
-            rating: 4.6,
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'GRU2024003',
-            nip: '198512102010041003',
-            name: 'Bu Lisa, S.Si.',
-            gender: 'female',
-            birthDate: '1985-12-10',
-            birthPlace: 'Surabaya',
-            email: 'lisa.kimia@sekolah.sch.id',
-            phone: '081234567892',
-            address: 'Jl. Tunjungan No. 78, Surabaya',
-            department: 'Kimia',
-            position: 'Guru Mata Pelajaran',
-            status: 'active',
-            joinDate: '2010-04-01',
-            experience: '13 tahun',
-            education: 'S1 Kimia',
-            certification: 'Sertifikasi Guru',
-            certificationYear: '2012',
-            classes: ['XII IPA 1', 'XII IPA 3'],
-            subjects: ['Kimia', 'Kimia Organik'],
-            schedule: 'Rabu-Jumat, 08:30-15:30',
-            office: 'Lab-103',
-            rating: 4.5,
-            lastActive: '2023-12-09'
-        },
-        {
-            id: 'GRU2024004',
-            nip: '197211301998032004',
-            name: 'Bu Rina, M.Si.',
-            gender: 'female',
-            birthDate: '1972-11-30',
-            birthPlace: 'Yogyakarta',
-            email: 'rina.biologi@sekolah.sch.id',
-            phone: '081234567893',
-            address: 'Jl. Malioboro No. 12, Yogyakarta',
-            department: 'Biologi',
-            position: 'Wakil Kepala Sekolah',
-            status: 'active',
-            joinDate: '1998-03-01',
-            experience: '25 tahun',
-            education: 'S2 Biologi',
-            certification: 'Sertifikasi Guru',
-            certificationYear: '2007',
-            classes: ['XII IPA 1', 'XI IPA 2'],
-            subjects: ['Biologi', 'Biologi Molekuler'],
-            schedule: 'Senin-Kamis, 07:00-14:00',
-            office: 'Wakasek-104',
-            rating: 4.7,
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'GRU2024005',
-            nip: '199002142015041005',
-            name: 'Bu Maya, S.Pd.',
-            gender: 'female',
-            birthDate: '1990-02-14',
-            birthPlace: 'Medan',
-            email: 'maya.bahasa@sekolah.sch.id',
-            phone: '081234567894',
-            address: 'Jl. Gatot Subroto No. 56, Medan',
-            department: 'Bahasa Inggris',
-            position: 'Guru Mata Pelajaran',
-            status: 'active',
-            joinDate: '2015-04-01',
-            experience: '8 tahun',
-            education: 'S1 Pendidikan Bahasa Inggris',
-            certification: 'Dalam Proses',
-            certificationYear: null,
-            classes: ['XII IPA 1', 'XII IPA 2'],
-            subjects: ['Bahasa Inggris', 'Conversation'],
-            schedule: 'Selasa-Jumat, 09:00-16:00',
-            office: 'Guru-105',
-            rating: 4.4,
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'GRU2024006',
-            nip: '198007182005121006',
-            name: 'Pak Agus, S.Pd.',
-            gender: 'male',
-            birthDate: '1980-07-18',
-            birthPlace: 'Semarang',
-            email: 'agus.bahasa@sekolah.sch.id',
-            phone: '081234567895',
-            address: 'Jl. Pemuda No. 23, Semarang',
-            department: 'Bahasa Indonesia',
-            position: 'Guru Mata Pelajaran',
-            status: 'onLeave',
-            joinDate: '2005-12-01',
-            experience: '18 tahun',
-            education: 'S1 Pendidikan Bahasa Indonesia',
-            certification: 'Sertifikasi Guru',
-            certificationYear: '2011',
-            classes: ['XII IPA 2', 'XII IPA 3'],
-            subjects: ['Bahasa Indonesia', 'Sastra'],
-            schedule: 'Senin-Rabu, 08:00-15:00',
-            office: 'Guru-106',
-            rating: 4.3,
-            lastActive: '2023-11-30',
-            leaveStart: '2023-12-01',
-            leaveEnd: '2023-12-31',
-            leaveReason: 'Cuti Tahunan'
-        },
-        {
-            id: 'GRU2024007',
-            nip: '196801252000031007',
-            name: 'Pak Joko, S.Pd.',
-            gender: 'male',
-            birthDate: '1968-01-25',
-            birthPlace: 'Malang',
-            email: 'joko.sejarah@sekolah.sch.id',
-            phone: '081234567896',
-            address: 'Jl. Ijen No. 34, Malang',
-            department: 'Sejarah',
-            position: 'Guru Senior',
-            status: 'active',
-            joinDate: '2000-03-01',
-            experience: '23 tahun',
-            education: 'S1 Pendidikan Sejarah',
-            certification: 'Sertifikasi Guru',
-            certificationYear: '2008',
-            classes: ['XII IPS 1', 'XII IPS 2'],
-            subjects: ['Sejarah', 'Sejarah Dunia'],
-            schedule: 'Selasa-Kamis, 08:30-15:30',
-            office: 'Guru-107',
-            rating: 4.2,
-            lastActive: '2023-12-09'
-        },
-        {
-            id: 'GRU2024008',
-            nip: '199209052018032008',
-            name: 'Bu Dina, S.Pd.',
-            gender: 'female',
-            birthDate: '1992-09-05',
-            birthPlace: 'Denpasar',
-            email: 'dina.seni@sekolah.sch.id',
-            phone: '081234567897',
-            address: 'Jl. Hayam Wuruk No. 67, Denpasar',
-            department: 'Seni Budaya',
-            position: 'Guru Mata Pelajaran',
-            status: 'active',
-            joinDate: '2018-03-01',
-            experience: '5 tahun',
-            education: 'S1 Pendidikan Seni',
-            certification: 'Belum',
-            certificationYear: null,
-            classes: ['XII IPA 1', 'XII IPA 2', 'XII IPA 3'],
-            subjects: ['Seni Budaya', 'Seni Rupa'],
-            schedule: 'Rabu-Jumat, 10:00-17:00',
-            office: 'Studio-108',
-            rating: 4.1,
-            lastActive: '2023-12-10'
-        },
-        {
-            id: 'GRU2024009',
-            nip: '197504122005121009',
-            name: 'Pak Hendra, M.Pd.',
-            gender: 'male',
-            birthDate: '1975-04-12',
-            birthPlace: 'Makassar',
-            email: 'hendra.olahraga@sekolah.sch.id',
-            phone: '081234567898',
-            address: 'Jl. Urip Sumoharjo No. 89, Makassar',
-            department: 'Olahraga',
-            position: 'Kepala Lab Olahraga',
-            status: 'active',
-            joinDate: '2005-12-01',
-            experience: '18 tahun',
-            education: 'S2 Pendidikan Olahraga',
-            certification: 'Sertifikasi Guru',
-            certificationYear: '2010',
-            classes: ['XII IPA 1', 'XI IPA 1', 'X IPA 1'],
-            subjects: ['Olahraga', 'Kesehatan'],
-            schedule: 'Senin-Kamis, 07:30-14:30',
-            office: 'Lab-109',
-            rating: 4.5,
-            lastActive: '2023-12-08'
-        },
-        {
-            id: 'GRU2024010',
-            nip: '195812082005121010',
-            name: 'Bu Sri, S.Pd.',
-            gender: 'female',
-            birthDate: '1958-12-08',
-            birthPlace: 'Palembang',
-            email: 'sri.bk@sekolah.sch.id',
-            phone: '081234567899',
-            address: 'Jl. Jenderal Sudirman No. 101, Palembang',
-            department: 'BK',
-            position: 'Guru BK',
-            status: 'retired',
-            joinDate: '2005-12-01',
-            experience: '18 tahun',
-            education: 'S1 Bimbingan Konseling',
-            certification: 'Sertifikasi Guru',
-            certificationYear: '2010',
-            classes: [],
-            subjects: ['Bimbingan Konseling'],
-            schedule: 'Senin-Jumat, 08:00-15:00',
-            office: 'BK-110',
-            rating: 4.6,
-            lastActive: '2023-10-31',
-            retirementDate: '2023-11-01'
-        }
-    ]);
+export default function TeachersTable({ teachers: teachersFromServer }) {
+    console.log(teachersFromServer);
+    const [teachers, setTeachers] = useState(teachersFromServer || [])
+
+    useEffect(() => {
+        setTeachers(teachersFromServer )
+    }, [teachersFromServer])
 
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('all');
@@ -287,14 +38,14 @@ export default function TeachersTable() {
         let filtered = [...teachers];
 
         // Apply search filter
-        if (searchQuery) {
-            filtered = filtered.filter(teacher =>
-                teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                teacher.nip.includes(searchQuery) ||
-                teacher.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                teacher.department.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        }
+        // if (searchQuery) {
+        //     filtered = filtered.filter(teacher =>
+        //         teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        //         teacher.nip.includes(searchQuery) ||
+        //         teacher.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        //         teacher.department.toLowerCase().includes(searchQuery.toLowerCase())
+        //     );
+        // }
 
         // Apply department filter
         if (selectedDepartment !== 'all') {
@@ -312,32 +63,32 @@ export default function TeachersTable() {
         }
 
         // Apply sorting
-        filtered.sort((a, b) => {
-            let aValue = a[sortField];
-            let bValue = b[sortField];
+        // filtered.sort((a, b) => {
+        //     let aValue = a[sortField];
+        //     let bValue = b[sortField];
 
-            // Handle special sorting cases
-            if (sortField === 'name') {
-                aValue = a.name.toLowerCase();
-                bValue = b.name.toLowerCase();
-            }
+        //     // Handle special sorting cases
+        //     if (sortField === 'name') {
+        //         aValue = a.name.toLowerCase();
+        //         bValue = b.name.toLowerCase();
+        //     }
 
-            if (sortField === 'experience') {
-                aValue = parseInt(a.experience);
-                bValue = parseInt(b.experience);
-            }
+        //     if (sortField === 'experience') {
+        //         aValue = parseInt(a.experience);
+        //         bValue = parseInt(b.experience);
+        //     }
 
-            if (sortField === 'rating') {
-                aValue = parseFloat(a.rating);
-                bValue = parseFloat(b.rating);
-            }
+        //     if (sortField === 'rating') {
+        //         aValue = parseFloat(a.rating);
+        //         bValue = parseFloat(b.rating);
+        //     }
 
-            if (sortDirection === 'asc') {
-                return aValue > bValue ? 1 : -1;
-            } else {
-                return aValue < bValue ? 1 : -1;
-            }
-        });
+        //     if (sortDirection === 'asc') {
+        //         return aValue > bValue ? 1 : -1;
+        //     } else {
+        //         return aValue < bValue ? 1 : -1;
+        //     }
+        // });
 
         return filtered;
     }, [teachers, searchQuery, selectedDepartment, selectedStatus, selectedPosition, sortField, sortDirection]);
@@ -455,7 +206,7 @@ export default function TeachersTable() {
                             {filteredTeachers.length} guru & staff ditemukan
                         </p>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                         {selectedTeachers.length > 0 && (
                             <div className="flex items-center space-x-2">
@@ -466,14 +217,14 @@ export default function TeachersTable() {
                                     onClick={() => handleBulkAction('export')}
                                     className="px-3 py-2 text-sm border border-neutral-300 rounded-lg hover:bg-neutral-50"
                                 >
-                                    <i className="fas fa-download mr-1"></i>
+                                    <FaDownload className='mr-1'/>
                                     Export
                                 </button>
                                 <button
                                     onClick={() => handleBulkAction('message')}
                                     className="px-3 py-2 text-sm bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100"
                                 >
-                                    <i className="fas fa-envelope mr-1"></i>
+                                    <FaEnvelope className='mr-1'/>
                                     Kirim Pesan
                                 </button>
                             </div>
@@ -492,7 +243,7 @@ export default function TeachersTable() {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                             />
-                            <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
+                            <FaSearch className='absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400'/>
                         </div>
                     </div>
 
@@ -528,9 +279,8 @@ export default function TeachersTable() {
                                 setSelectedStatus('all');
                                 setSelectedPosition('all');
                             }}
-                            className="px-3 py-2 text-sm border border-neutral-300 rounded-lg hover:bg-neutral-50"
+                            className="px-3 flex py-2 text-sm border border-neutral-300 rounded-lg hover:bg-neutral-50"
                         >
-                            <i className="fas fa-times mr-1"></i>
                             Reset
                         </button>
                     </div>
@@ -584,31 +334,6 @@ export default function TeachersTable() {
                                 </button>
                             </th>
                             <th className="p-4 text-left">
-                                <span className="font-medium text-neutral-700">Jabatan</span>
-                            </th>
-                            <th className="p-4 text-left">
-                                <button
-                                    onClick={() => handleSort('experience')}
-                                    className="flex items-center font-medium text-neutral-700 hover:text-neutral-900"
-                                >
-                                    Pengalaman
-                                    {sortField === 'experience' && (
-                                        <i className={`fas fa-arrow-${sortDirection === 'asc' ? 'up' : 'down'} ml-1`}></i>
-                                    )}
-                                </button>
-                            </th>
-                            <th className="p-4 text-left">
-                                <button
-                                    onClick={() => handleSort('rating')}
-                                    className="flex items-center font-medium text-neutral-700 hover:text-neutral-900"
-                                >
-                                    Rating
-                                    {sortField === 'rating' && (
-                                        <i className={`fas fa-arrow-${sortDirection === 'asc' ? 'up' : 'down'} ml-1`}></i>
-                                    )}
-                                </button>
-                            </th>
-                            <th className="p-4 text-left">
                                 <span className="font-medium text-neutral-700">Status</span>
                             </th>
                             <th className="p-4 text-left">
@@ -620,9 +345,9 @@ export default function TeachersTable() {
                         {paginatedTeachers.map((teacher) => {
                             const certStatus = getCertificationStatus(teacher.certification);
                             const age = calculateAge(teacher.birthDate);
-                            
+
                             return (
-                                <tr 
+                                <tr
                                     key={teacher.id}
                                     className="hover:bg-neutral-50 group"
                                 >
@@ -636,87 +361,22 @@ export default function TeachersTable() {
                                     </td>
                                     <td className="p-4">
                                         <div className="flex items-center">
-                                            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3">
-                                                <i className="fas fa-chalkboard-teacher text-primary"></i>
-                                            </div>
                                             <div>
                                                 <div className="font-medium text-neutral-900">
-                                                    {teacher.name}
-                                                </div>
-                                                <div className="text-sm text-neutral-600">
-                                                    <div className="flex items-center">
-                                                        <i className={`${getGenderIcon(teacher.gender)} mr-1`}></i>
-                                                        <span>{age} tahun • {formatDate(teacher.birthDate)}</span>
-                                                    </div>
+                                                    {teacher.full_name}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="p-4">
                                         <div className="font-medium text-neutral-900">
-                                            {teacher.nip}
-                                        </div>
-                                        <div className="text-sm text-neutral-600">
-                                            {teacher.id}
+                                            {teacher.employee_number}
                                         </div>
                                     </td>
                                     <td className="p-4">
                                         <span className="font-medium text-neutral-900">
-                                            {teacher.department}
+                                            {teacher.primary_subject}
                                         </span>
-                                        <div className="text-sm text-neutral-600">
-                                            {teacher.subjects.join(', ')}
-                                        </div>
-                                    </td>
-                                    <td className="p-4">
-                                        <div className="font-medium text-neutral-900">
-                                            {teacher.position}
-                                        </div>
-                                        <div className="text-sm text-neutral-600">
-                                            {teacher.education}
-                                        </div>
-                                    </td>
-                                    <td className="p-4">
-                                        <div className="flex items-center">
-                                            <div className="w-16 bg-neutral-100 rounded-full h-2 mr-3">
-                                                <div 
-                                                    className="h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-                                                    style={{ 
-                                                        width: `${Math.min(100, parseInt(teacher.experience) * 5)}%` 
-                                                    }}
-                                                ></div>
-                                            </div>
-                                            <span className="font-medium text-neutral-900">
-                                                {teacher.experience}
-                                            </span>
-                                        </div>
-                                        <div className="text-xs text-neutral-500 mt-1">
-                                            Bergabung: {formatDate(teacher.joinDate)}
-                                        </div>
-                                    </td>
-                                    <td className="p-4">
-                                        <div className="flex items-center">
-                                            <div className="flex mr-2">
-                                                {[1, 2, 3, 4, 5].map((star) => (
-                                                    <i
-                                                        key={star}
-                                                        className={`fas fa-star ${
-                                                            star <= Math.floor(teacher.rating)
-                                                                ? 'text-yellow-500'
-                                                                : star === Math.ceil(teacher.rating) && teacher.rating % 1 >= 0.5
-                                                                ? 'text-yellow-300'
-                                                                : 'text-gray-300'
-                                                        }`}
-                                                    ></i>
-                                                ))}
-                                            </div>
-                                            <span className="font-medium text-neutral-900">
-                                                {teacher.rating}
-                                            </span>
-                                        </div>
-                                        <div className={`px-2 py-1 rounded-md text-xs mt-1 ${certStatus.color}`}>
-                                            {certStatus.label}
-                                        </div>
                                     </td>
                                     <td className="p-4">
                                         <div className="space-y-1">
@@ -736,30 +396,24 @@ export default function TeachersTable() {
                                         </div>
                                     </td>
                                     <td className="p-4">
-                                        <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button 
+                                        <div className="flex items-center space-x-2">
+                                            <button
                                                 className="p-2 text-neutral-600 hover:text-primary hover:bg-primary/10 rounded-lg"
                                                 title="Lihat Detail"
                                             >
-                                                <i className="fas fa-eye"></i>
+                                                <FaEye/>
                                             </button>
-                                            <button 
-                                                className="p-2 text-neutral-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg"
+                                            <button
+                                                className="p-2text-neutral-600 hover:text-primary hover:bg-blue-50 rounded-lg"
                                                 title="Edit"
                                             >
-                                                <i className="fas fa-edit"></i>
+                                                <FaEdit/>
                                             </button>
-                                            <button 
-                                                className="p-2 text-neutral-600 hover:text-green-600 hover:bg-green-50 rounded-lg"
-                                                title="Kirim Pesan"
-                                            >
-                                                <i className="fas fa-envelope"></i>
-                                            </button>
-                                            <button 
-                                                className="p-2 text-neutral-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg"
+                                            <button
+                                                className="p-2 text-neutral-600 hover:text-primary hover:bg-blue-50 rounded-lg"
                                                 title="Jadwal"
                                             >
-                                                <i className="fas fa-calendar-alt"></i>
+                                                <FaCalendarAlt/>
                                             </button>
                                         </div>
                                     </td>
@@ -779,7 +433,7 @@ export default function TeachersTable() {
                         {searchQuery ? 'Tidak ditemukan guru dengan kriteria tersebut.' : 'Belum ada data guru.'}
                     </p>
                     {searchQuery && (
-                        <button 
+                        <button
                             onClick={() => {
                                 setSearchQuery('');
                                 setSelectedDepartment('all');
@@ -803,20 +457,19 @@ export default function TeachersTable() {
                                 Menampilkan {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filteredTeachers.length)} dari {filteredTeachers.length} guru
                             </p>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2">
                             <button
                                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                 disabled={currentPage === 1}
-                                className={`px-3 py-2 rounded-lg ${
-                                    currentPage === 1 
-                                        ? 'text-neutral-400 cursor-not-allowed' 
-                                        : 'text-neutral-700 hover:bg-neutral-100'
-                                }`}
+                                className={`px-3 py-2 rounded-lg ${currentPage === 1
+                                    ? 'text-neutral-400 cursor-not-allowed'
+                                    : 'text-neutral-700 hover:bg-neutral-100'
+                                    }`}
                             >
                                 <i className="fas fa-chevron-left"></i>
                             </button>
-                            
+
                             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                                 let pageNum;
                                 if (totalPages <= 5) {
@@ -828,34 +481,32 @@ export default function TeachersTable() {
                                 } else {
                                     pageNum = currentPage - 2 + i;
                                 }
-                                
+
                                 return (
                                     <button
                                         key={pageNum}
                                         onClick={() => setCurrentPage(pageNum)}
-                                        className={`w-10 h-10 rounded-lg ${
-                                            currentPage === pageNum
-                                                ? 'bg-primary text-white'
-                                                : 'text-neutral-700 hover:bg-neutral-100'
-                                        }`}
+                                        className={`w-10 h-10 rounded-lg ${currentPage === pageNum
+                                            ? 'bg-primary text-white'
+                                            : 'text-neutral-700 hover:bg-neutral-100'
+                                            }`}
                                     >
                                         {pageNum}
                                     </button>
                                 );
                             })}
-                            
+
                             <button
                                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}
-                                className={`px-3 py-2 rounded-lg ${
-                                    currentPage === totalPages 
-                                        ? 'text-neutral-400 cursor-not-allowed' 
-                                        : 'text-neutral-700 hover:bg-neutral-100'
-                                }`}
+                                className={`px-3 py-2 rounded-lg ${currentPage === totalPages
+                                    ? 'text-neutral-400 cursor-not-allowed'
+                                    : 'text-neutral-700 hover:bg-neutral-100'
+                                    }`}
                             >
                                 <i className="fas fa-chevron-right"></i>
                             </button>
-                            
+
                             <select
                                 value={itemsPerPage}
                                 onChange={(e) => {
