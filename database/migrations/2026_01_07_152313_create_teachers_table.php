@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('employee_number')->unique();
+            $table->foreignId('subject_id')->constrained()->cascadeOnDelete();
             $table->string('full_name');
-            $table->string('primary_subject');
             $table->enum('status', ['active', 'onLeave', 'retired', 'resigned']);
             $table->timestamps();
         });

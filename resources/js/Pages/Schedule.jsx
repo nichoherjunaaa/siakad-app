@@ -6,9 +6,12 @@ import ScheduleFilter from '@/Components/Schedule/ScheduleFilter';
 import ScheduleCalendar from '@/Components/Schedule/ScheduleCalendar';
 import ClassInformation from '@/Components/Schedule/ClassInformation';
 import TeacherContacts from '@/Components/Schedule/TeacherContacts';
+import { usePage } from '@inertiajs/react';
 
 export default function Schedule({ auth }) {
     const userData = auth.user;
+
+    const { schedules } = usePage().props;
 
     const academicYear = '2023/2024';
     const semester = 'Genap';
@@ -31,10 +34,10 @@ export default function Schedule({ auth }) {
             </div>
 
             {/* Schedule Filter */}
-            <ScheduleFilter />
+            {userData?.role === 'admin' && <ScheduleFilter />}
 
             {/* Schedule View */}
-            <ScheduleView user={userData} />
+            <ScheduleView user={userData} schedules={schedules} />
 
             {/* Additional Information */}
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">

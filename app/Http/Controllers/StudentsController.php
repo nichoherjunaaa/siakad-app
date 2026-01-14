@@ -9,7 +9,7 @@ class StudentsController extends Controller
 {
     public function index()
     {
-        $students = Student::with(['classRoom', 'guardian', 'user'])->get();
+        $students = Student::with(['class_room', 'guardian', 'user'])->get();
         return Inertia::render('Students', [
             'students' => $students
         ]);

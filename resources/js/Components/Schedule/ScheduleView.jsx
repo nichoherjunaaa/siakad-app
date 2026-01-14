@@ -1,108 +1,182 @@
 import { useState, useEffect } from 'react';
-import { FaCalendar, FaChevronLeft, FaChevronRight, FaClock, FaDoorOpen, FaUserTie } from 'react-icons/fa';
+import { FaCalendar, FaChevronLeft, FaChevronRight, FaClock, FaDoorOpen, FaUserTie, FaCalendarTimes } from 'react-icons/fa';
 
-export default function ScheduleView({ user }) {
-    const [viewMode, setViewMode] = useState('weekly'); 
+export default function ScheduleView({ user, schedules: schedulesFromServer }) {
+    const [viewMode, setViewMode] = useState('weekly');
     const [selectedDay, setSelectedDay] = useState('monday');
     const [currentDate, setCurrentDate] = useState(new Date());
+    const [scheduleData, setScheduleData] = useState({});
 
-    // Sample schedule data
-    const scheduleData = {
-        monday: [
-            { time: "07:00 - 07:45", subject: "Upacara", teacher: "Pak Kepala Sekolah", room: "Lapangan", type: "upacara" },
-            { time: "07:45 - 08:30", subject: "Matematika", teacher: "Bu Sari, S.Pd.", room: "Ruang 201", type: "matematika" },
-            { time: "08:30 - 09:15", subject: "Fisika", teacher: "Pak Budi, M.Pd.", room: "Lab Fisika", type: "fisika" },
-            { time: "09:15 - 10:00", subject: "Kimia", teacher: "Bu Lisa, S.Si.", room: "Lab Kimia", type: "kimia" },
-            { time: "10:15 - 11:00", subject: "Bahasa Inggris", teacher: "Bu Maya, S.Pd.", room: "Ruang 202", type: "inggris" },
-            { time: "11:00 - 11:45", subject: "Bahasa Indonesia", teacher: "Pak Anton, M.Pd.", room: "Ruang 203", type: "indonesia" },
-            { time: "11:45 - 12:30", subject: "Sejarah", teacher: "Bu Dewi, S.Pd.", room: "Ruang 204", type: "sejarah" }
-        ],
-        tuesday: [
-            { time: "07:00 - 07:45", subject: "Olahraga", teacher: "Pak Andi, S.Pd.", room: "Lapangan", type: "olahraga" },
-            { time: "07:45 - 08:30", subject: "Biologi", teacher: "Bu Rina, M.Si.", room: "Lab Biologi", type: "biologi" },
-            { time: "08:30 - 09:15", subject: "Matematika", teacher: "Bu Sari, S.Pd.", room: "Ruang 201", type: "matematika" },
-            { time: "09:15 - 10:00", subject: "Informatika", teacher: "Pak Deni, S.Kom.", room: "Lab Komputer", type: "informatika" },
-            { time: "10:15 - 11:00", subject: "Seni Budaya", teacher: "Bu Tari, S.Sn.", room: "Ruang Seni", type: "seni" },
-            { time: "11:00 - 11:45", subject: "PKN", teacher: "Pak Joko, M.Pd.", room: "Ruang 205", type: "pkn" }
-        ],
-        wednesday: [
-            { time: "07:00 - 07:45", subject: "Matematika", teacher: "Bu Sari, S.Pd.", room: "Ruang 201", type: "matematika" },
-            { time: "07:45 - 08:30", subject: "Fisika", teacher: "Pak Budi, M.Pd.", room: "Lab Fisika", type: "fisika" },
-            { time: "08:30 - 09:15", subject: "Ekstrakurikuler", teacher: "Pembina OSIS", room: "Aula", type: "ekstra" },
-            { time: "09:15 - 10:00", subject: "Ekstrakurikuler", teacher: "Pembina OSIS", room: "Aula", type: "ekstra" }
-        ],
-        thursday: [
-            { time: "07:00 - 07:45", subject: "Kimia", teacher: "Bu Lisa, S.Si.", room: "Lab Kimia", type: "kimia" },
-            { time: "07:45 - 08:30", subject: "Bahasa Inggris", teacher: "Bu Maya, S.Pd.", room: "Ruang 202", type: "inggris" },
-            { time: "08:30 - 09:15", subject: "Bahasa Indonesia", teacher: "Pak Anton, M.Pd.", room: "Ruang 203", type: "indonesia" },
-            { time: "09:15 - 10:00", subject: "Sejarah", teacher: "Bu Dewi, S.Pd.", room: "Ruang 204", type: "sejarah" },
-            { time: "10:15 - 11:00", subject: "Matematika", teacher: "Bu Sari, S.Pd.", room: "Ruang 201", type: "matematika" },
-            { time: "11:00 - 11:45", subject: "Agama", teacher: "Pak Umar, S.Ag.", room: "Ruang 206", type: "agama" }
-        ],
-        friday: [
-            { time: "07:00 - 07:45", subject: "Biologi", teacher: "Bu Rina, M.Si.", room: "Lab Biologi", type: "biologi" },
-            { time: "07:45 - 08:30", subject: "Informatika", teacher: "Pak Deni, S.Kom.", room: "Lab Komputer", type: "informatika" },
-            { time: "08:30 - 09:15", subject: "Seni Budaya", teacher: "Bu Tari, S.Sn.", room: "Ruang Seni", type: "seni" },
-            { time: "09:15 - 10:00", subject: "PKN", teacher: "Pak Joko, M.Pd.", room: "Ruang 205", type: "pkn" },
-            { time: "10:15 - 11:00", subject: "Konseling", teacher: "BP/BK", room: "Ruang BK", type: "konseling" }
-        ],
-        saturday: [
-            { time: "07:00 - 08:30", subject: "Pramuka", teacher: "Pembina Pramuka", room: "Lapangan", type: "pramuka" },
-            { time: "08:30 - 10:00", subject: "Kegiatan Projek", teacher: "Wali Kelas", room: "Ruang Kelas", type: "projek" }
-        ]
+
+    // Mapping hari Indonesia ke Inggris
+    const dayMapping = {
+        'senin': 'monday',
+        'selasa': 'tuesday',
+        'rabu': 'wednesday',
+        'kamis': 'thursday',
+        'jumat': 'friday',
+        'sabtu': 'saturday',
+        'minggu': 'sunday'
+    };
+
+    const reverseDayMapping = {
+        'monday': 'Senin',
+        'tuesday': 'Selasa',
+        'wednesday': 'Rabu',
+        'thursday': 'Kamis',
+        'friday': 'Jumat',
+        'saturday': 'Sabtu',
+        'sunday': 'Minggu'
     };
 
     const days = [
-        { id: 'monday', name: 'Senin', date: '11 Mar' },
-        { id: 'tuesday', name: 'Selasa', date: '12 Mar' },
-        { id: 'wednesday', name: 'Rabu', date: '13 Mar' },
-        { id: 'thursday', name: 'Kamis', date: '14 Mar' },
-        { id: 'friday', name: 'Jumat', date: '15 Mar' },
-        { id: 'saturday', name: 'Sabtu', date: '16 Mar' }
+        { id: 'monday', name: 'Senin', date: getDateForDay('senin') },
+        { id: 'tuesday', name: 'Selasa', date: getDateForDay('selasa') },
+        { id: 'wednesday', name: 'Rabu', date: getDateForDay('rabu') },
+        { id: 'thursday', name: 'Kamis', date: getDateForDay('kamis') },
+        { id: 'friday', name: 'Jumat', date: getDateForDay('jumat') },
+        { id: 'saturday', name: 'Sabtu', date: getDateForDay('sabtu') }
     ];
 
-    const getDayName = (dayId) => {
-        const day = days.find(d => d.id === dayId);
-        return day ? day.name : 'Senin';
+    // Fungsi untuk mendapatkan tanggal berdasarkan hari
+    function getDateForDay(dayName) {
+        const daysOfWeek = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
+        const today = new Date();
+        const dayIndex = daysOfWeek.indexOf(dayName);
+        
+        if (dayIndex === -1) return '';
+        
+        const targetDate = new Date(today);
+        const currentDayIndex = today.getDay();
+        const diff = dayIndex - currentDayIndex;
+        targetDate.setDate(today.getDate() + diff);
+        
+        return targetDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+    }
+
+    // Format data dari server ke format yang bisa digunakan
+    useEffect(() => {
+        if (schedulesFromServer && schedulesFromServer.length > 0) {
+            const formattedSchedules = formatSchedules(schedulesFromServer);
+            setScheduleData(formattedSchedules);
+            
+            // Set hari ini sebagai selected day
+            const today = new Date();
+            const dayNames = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
+            const todayId = dayMapping[dayNames[today.getDay()]] || 'monday';
+            setSelectedDay(todayId);
+        } else {
+            console.log('No schedules data available');
+        }
+    }, [schedulesFromServer]);
+
+    const formatSchedules = (serverSchedules) => {
+        const formatted = {
+            monday: [],
+            tuesday: [],
+            wednesday: [],
+            thursday: [],
+            friday: [],
+            saturday: []
+        };
+
+
+        serverSchedules.forEach(schedule => {
+            // Data dari server sudah dalam format Inggris ('monday')
+            const day = schedule.day_of_week.toLowerCase();
+            // console.log(`Processing schedule for day: ${day}`, schedule);
+            
+            // Langsung gunakan day karena sudah format Inggris
+            if (formatted[day]) {
+                const startTime = schedule.start_time;
+                const endTime = schedule.end_time;
+                const timeRange = `${startTime.substring(0, 5)} - ${endTime.substring(0, 5)}`;
+                
+                const scheduleItem = {
+                    time: timeRange,
+                    subject: schedule.subject?.name || 'Mata Pelajaran',
+                    teacher: schedule.teacher?.full_name || 'Guru',
+                    room: `Ruang ${schedule.class_room_id || 'Kelas'}`,
+                    type: schedule.subject?.name?.toLowerCase() || schedule.subject?.subject_code?.toLowerCase() || 'default',
+                    start_time: startTime,
+                    end_time: endTime,
+                    startHour: parseInt(startTime.substring(0, 2)),
+                    startMinute: parseInt(startTime.substring(3, 5)),
+                    endHour: parseInt(endTime.substring(0, 2)),
+                    endMinute: parseInt(endTime.substring(3, 5))
+                };
+                
+                formatted[day].push(scheduleItem);
+            } else {
+                // console.log(`Day ${day} not found in formatted object`);
+            }
+        });
+
+        // Sort schedules by start time
+        Object.keys(formatted).forEach(day => {
+            formatted[day].sort((a, b) => a.start_time.localeCompare(b.start_time));
+            // console.log(`Schedules for ${day}:`, formatted[day]);
+        });
+
+        return formatted;
     };
 
     const getSubjectIcon = (type) => {
-        const icons = {
-            matematika: 'fas fa-calculator',
-            fisika: 'fas fa-atom',
-            kimia: 'fas fa-flask',
-            biologi: 'fas fa-dna',
-            inggris: 'fas fa-language',
-            indonesia: 'fas fa-book',
-            sejarah: 'fas fa-landmark',
-            seni: 'fas fa-palette',
-            olahraga: 'fas fa-running',
-            pramuka: 'fas fa-campground',
-            upacara: 'fas fa-flag',
-            ekstra: 'fas fa-users',
-            projek: 'fas fa-project-diagram',
-            informatika: 'fas fa-laptop-code',
-            pkn: 'fas fa-balance-scale',
-            agama: 'fas fa-mosque',
-            konseling: 'fas fa-comments'
+        // Map subject codes or names to icons
+        const iconMap = {
+            'biologi': 'fas fa-dna',
+            'matematika': 'fas fa-calculator',
+            'fisika': 'fas fa-atom',
+            'kimia': 'fas fa-flask',
+            'bahasa': 'fas fa-language',
+            'sejarah': 'fas fa-landmark',
+            'seni': 'fas fa-palette',
+            'olahraga': 'fas fa-running',
+            'pkn': 'fas fa-balance-scale',
+            'agama': 'fas fa-mosque',
+            'informatika': 'fas fa-laptop-code',
+            'default': 'fas fa-book'
         };
-        return icons[type] || 'fas fa-book';
+
+        // Check if type contains any keyword
+        const lowerType = type.toLowerCase();
+        for (const [key, icon] of Object.entries(iconMap)) {
+            if (lowerType.includes(key)) {
+                return icon;
+            }
+        }
+
+        return iconMap.default;
     };
 
     const getSubjectColor = (type) => {
         const colors = {
-            matematika: 'bg-blue-100 text-blue-700 border-blue-200',
-            fisika: 'bg-purple-100 text-purple-700 border-purple-200',
-            kimia: 'bg-green-100 text-green-700 border-green-200',
-            biologi: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-            inggris: 'bg-red-100 text-red-700 border-red-200',
-            indonesia: 'bg-blue-100 text-blue-700 border-blue-200',
-            sejarah: 'bg-purple-100 text-purple-700 border-purple-200',
-            seni: 'bg-pink-100 text-pink-700 border-pink-200',
-            olahraga: 'bg-green-100 text-green-700 border-green-200',
-            default: 'bg-gray-100 text-gray-700 border-gray-200'
+            'biologi': 'bg-green-100 text-green-700 border-green-200',
+            'matematika': 'bg-blue-100 text-blue-700 border-blue-200',
+            'fisika': 'bg-purple-100 text-purple-700 border-purple-200',
+            'kimia': 'bg-pink-100 text-pink-700 border-pink-200',
+            'bahasa': 'bg-red-100 text-red-700 border-red-200',
+            'sejarah': 'bg-yellow-100 text-yellow-700 border-yellow-200',
+            'seni': 'bg-indigo-100 text-indigo-700 border-indigo-200',
+            'olahraga': 'bg-teal-100 text-teal-700 border-teal-200',
+            'pkn': 'bg-orange-100 text-orange-700 border-orange-200',
+            'agama': 'bg-cyan-100 text-cyan-700 border-cyan-200',
+            'informatika': 'bg-gray-100 text-gray-700 border-gray-200',
+            'default': 'bg-gray-100 text-gray-700 border-gray-200'
         };
-        return colors[type] || colors.default;
+
+        const lowerType = type.toLowerCase();
+        for (const [key, color] of Object.entries(colors)) {
+            if (lowerType.includes(key)) {
+                return color;
+            }
+        }
+
+        return colors.default;
+    };
+
+    const getDayName = (dayId) => {
+        return reverseDayMapping[dayId] || 'Senin';
     };
 
     const formatDate = () => {
@@ -126,253 +200,151 @@ export default function ScheduleView({ user }) {
 
     const handleToday = () => {
         const today = new Date().getDay();
-        const dayMap = { 1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 0: 'sunday' };
+        const dayMap = { 
+            1: 'monday', 
+            2: 'tuesday', 
+            3: 'wednesday', 
+            4: 'thursday', 
+            5: 'friday', 
+            6: 'saturday', 
+            0: 'sunday' 
+        };
         setSelectedDay(dayMap[today] || 'monday');
         setCurrentDate(new Date());
     };
 
+    // Generate time slots from schedules
+    const getAllTimeSlots = () => {
+        const allTimes = new Set();
+        
+        // Tambahkan semua jam dari 7 pagi sampai 4 sore
+        for (let i = 7; i <= 16; i++) {
+            allTimes.add(i);
+        }
+        
+        return Array.from(allTimes).sort((a, b) => a - b);
+    };
+
+    const timeSlots = getAllTimeSlots();
     const currentSchedule = scheduleData[selectedDay] || [];
 
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 overflow-hidden">
-            {/* View Mode Tabs */}
+            {/* View Mode Tabs - Only Weekly */}
             <div className="border-b border-neutral-200">
                 <div className="flex">
-                    <button
-                        className={`px-6 py-4 font-medium ${viewMode === 'daily' ? 'text-primary border-b-2 border-primary' : 'text-neutral-600 hover:text-neutral-900'}`}
-                        onClick={() => setViewMode('daily')}
-                    >
-                        Harian
-                    </button>
                     <button
                         className={`px-6 py-4 font-medium ${viewMode === 'weekly' ? 'text-primary border-b-2 border-primary' : 'text-neutral-600 hover:text-neutral-900'}`}
                         onClick={() => setViewMode('weekly')}
                     >
-                        Mingguan
-                    </button>
-                    <button
-                        className={`px-6 py-4 font-medium ${viewMode === 'monthly' ? 'text-primary border-b-2 border-primary' : 'text-neutral-600 hover:text-neutral-900'}`}
-                        onClick={() => setViewMode('monthly')}
-                    >
-                        Bulanan
+                        Jadwal Mingguan
                     </button>
                 </div>
             </div>
 
-            {/* Daily View */}
-            {viewMode === 'daily' && (
-                <div className="p-6">
-                    {/* Day Navigation */}
-                    <div className="flex items-center justify-between mb-6">
-                        <div>
-                            <h3 className="text-xl font-bold text-neutral-900 mb-1">
-                                {getDayName(selectedDay)}, {formatDate()}
-                            </h3>
-                            <p className="text-neutral-600">
-                                {currentSchedule.length} mata pelajaran • Total {currentSchedule.length} jam pelajaran
-                            </p>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <button
-                                onClick={handlePreviousDay}
-                                className="p-2 rounded-lg hover:bg-neutral-100"
-                            >
-                                <FaChevronLeft/>
-                            </button>
-                            <button
-                                onClick={handleToday}
-                                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark"
-                            >
-                                Hari Ini
-                            </button>
-                            <button
-                                onClick={handleNextDay}
-                                className="p-2 rounded-lg hover:bg-neutral-100"
-                            >
-                                <FaChevronRight/>
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Day Selector */}
-                    <div className="flex space-x-2 mb-6 overflow-x-auto pb-2">
-                        {days.map((day) => (
-                            <button
-                                key={day.id}
-                                onClick={() => setSelectedDay(day.id)}
-                                className={`px-4 py-3 rounded-xl border flex-shrink-0 ${selectedDay === day.id
-                                    ? 'bg-primary text-white border-primary'
-                                    : 'border-neutral-300 hover:bg-neutral-50'
-                                    }`}
-                            >
-                                <div className="font-medium">{day.name}</div>
-                                <div className="text-sm opacity-80">{day.date}</div>
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Schedule List */}
-                    <div className="space-y-3">
-                        {currentSchedule.length > 0 ? (
-                            currentSchedule.map((item, index) => {
-                                const subjectColor = getSubjectColor(item.type);
-                                const isCurrent = checkIfCurrentTime(item.time);
-
-                                return (
-                                    <div
-                                        key={index}
-                                        className={`flex items-center p-4 rounded-xl border ${isCurrent ? 'border-primary bg-primary/5' : 'border-neutral-200'} hover:bg-neutral-50 transition-colors`}
-                                    >
-                                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center mr-4 ${subjectColor}`}>
-                                            <i className={getSubjectIcon(item.type)}></i>
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center justify-between mb-1">
-                                                <h4 className="font-medium text-lg">{item.subject}</h4>
-                                                {isCurrent && (
-                                                    <span className="text-xs px-2 py-1 rounded-full bg-primary text-white">
-                                                        Sedang Berlangsung
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <div className="flex flex-wrap gap-3 text-sm text-neutral-600">
-                                                <span className="flex items-center">
-                                                    <FaUserTie/>
-                                                    {item.teacher}
-                                                </span>
-                                                <span className="flex items-center">
-                                                    <FaDoorOpen className="mr-1"/>
-                                                    {item.room}
-                                                </span>
-                                                <span className="flex items-center">
-                                                    <FaClock className='mr-1'/>
-                                                    {item.time}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <button className="ml-4 p-2 rounded-lg hover:bg-neutral-100">
-                                            <FaChevronRight/>
-                                        </button>
-                                    </div>
-                                );
-                            })
-                        ) : (
-                            <div className="text-center py-12">
-                                <FaCalendarTimes className="text-4xl text-neutral-300 mb-4 mx-auto"/>
-                                <h3 className="text-lg font-medium mb-2">Tidak ada jadwal</h3>
-                                <p className="text-neutral-600">Tidak ada jadwal pelajaran untuk hari ini.</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
-
             {/* Weekly View */}
             {viewMode === 'weekly' && (
                 <div className="p-6">
-                    <h3 className="text-xl font-bold text-neutral-900 mb-6">Jadwal Mingguan</h3>
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr className="bg-neutral-50">
-                                    <th className="p-4 text-left font-medium border-r border-neutral-200">Waktu</th>
-                                    {days.map(day => (
-                                        <th key={day.id} className="p-4 text-center font-medium border-r border-neutral-200">
-                                            {day.name}<br />
-                                            <span className="text-sm font-normal text-neutral-500">{day.date}</span>
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-xl font-bold text-neutral-900">Jadwal Pelajaran Mingguan</h3>
+                        <div className="text-sm text-neutral-600">
+                            Tahun Ajaran: {schedulesFromServer?.[0]?.academic_year?.year || '2025/2026'}
+                        </div>
+                    </div>
+                    
+                    {Object.keys(scheduleData).length > 0 ? (
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="bg-neutral-50">
+                                        <th className="p-4 text-left font-medium border-r border-neutral-200 min-w-[100px]">
+                                            Waktu
                                         </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {['07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'].map(time => (
-                                    <tr key={time} className="border-t border-neutral-200">
-                                        <td className="p-4 border-r border-neutral-200 font-medium">{time}</td>
-                                        {days.map(day => {
-                                            const schedule = scheduleData[day.id];
-                                            const scheduleAtTime = schedule ? schedule.find(s => {
-                                                const startHour = parseInt(s.time.split(':')[0]);
-                                                return startHour === parseInt(time);
-                                            }) : null;
-
-                                            return (
-                                                <td key={`${day.id}-${time}`} className="p-2 border-r border-neutral-200">
-                                                    {scheduleAtTime ? (
-                                                        <div className={`p-3 rounded-lg border ${getSubjectColor(scheduleAtTime.type)}`}>
-                                                            <div className="font-medium text-sm">{scheduleAtTime.subject}</div>
-                                                            <div className="text-xs opacity-75">{scheduleAtTime.teacher}</div>
-                                                            <div className="text-xs opacity-60">{scheduleAtTime.room}</div>
-                                                        </div>
-                                                    ) : (
-                                                        <div className="h-16"></div>
-                                                    )}
-                                                </td>
-                                            );
-                                        })}
+                                        {days.map(day => (
+                                            <th key={day.id} className="p-4 text-center font-medium border-r border-neutral-200 min-w-[150px]">
+                                                {day.name}<br />
+                                                <span className="text-sm font-normal text-neutral-500">{day.date}</span>
+                                            </th>
+                                        ))}
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    {timeSlots.map(hour => (
+                                        <tr key={hour} className="border-t border-neutral-200">
+                                            <td className="p-4 border-r border-neutral-200 font-medium align-top">
+                                                {hour.toString().padStart(2, '0')}:00
+                                            </td>
+                                            {days.map(day => {
+                                                const schedulesForDay = scheduleData[day.id] || [];
+                                                const scheduleAtHour = schedulesForDay.find(s => {
+                                                    const scheduleStartHour = s.startHour;
+                                                    const scheduleEndHour = s.endHour;
+                                                    return hour >= scheduleStartHour && hour <= scheduleEndHour;
+                                                });
+                                                // console.log(`Day: ${day.id}, Hour: ${hour}:00, Found schedule:`, scheduleAtHour);
+                                                return (
+                                                    <td key={`${day.id}-${hour}`} className="p-2 border-r border-neutral-200 align-top">
+                                                        {scheduleAtHour ? (
+                                                            <div className={`p-3 rounded-lg border ${getSubjectColor(scheduleAtHour.type)}`}>
+                                                                <div className="font-medium text-sm mb-1">
+                                                                    {scheduleAtHour.subject}
+                                                                </div>
+                                                                <div className="text-xs opacity-75 mb-1">
+                                                                    {scheduleAtHour.teacher}
+                                                                </div>
+                                                                <div className="text-xs opacity-60 mb-1">
+                                                                    {scheduleAtHour.time}
+                                                                </div>
+                                                                <div className="text-xs opacity-60">
+                                                                    {scheduleAtHour.room}
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="h-16"></div>
+                                                        )}
+                                                    </td>
+                                                );
+                                            })}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <div className="text-center py-12">
+                            <FaCalendarTimes className="text-4xl text-neutral-300 mb-4 mx-auto" />
+                            <h3 className="text-lg font-medium mb-2">Tidak ada jadwal</h3>
+                            <p className="text-neutral-600">Belum ada jadwal pelajaran untuk minggu ini.</p>
+                        </div>
+                    )}
                 </div>
             )}
 
-            {/* Monthly View */}
-            {viewMode === 'monthly' && (
-                <div className="p-6">
-                    <h3 className="text-xl font-bold text-neutral-900 mb-6">Kalender Akademik</h3>
-                    <div className="text-center py-12">
-                        <FaCalendar className="text-4xl text-neutral-300 mb-4 mx-auto" />
-                        <h3 className="text-lg font-medium mb-2">Tampilan Bulanan</h3>
-                        <p className="text-neutral-600 mb-4">Fitur tampilan bulanan akan segera hadir.</p>
-                        <button className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark">
-                            Lihat Kalender Akademik
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* Schedule Summary */}
-            {viewMode === 'daily' && currentSchedule.length > 0 && (
+            {/* Summary */}
+            {Object.keys(scheduleData).length > 0 && (
                 <div className="border-t border-neutral-200 p-6">
-                    <h4 className="font-medium text-neutral-900 mb-4">Ringkasan Hari Ini</h4>
-                    <div className="grid grid-cols-3 gap-4">
-                        <div className="p-4 bg-blue-50 rounded-xl">
-                            <div className="text-2xl font-bold text-blue-700 mb-1">{currentSchedule.length}</div>
-                            <div className="text-sm text-neutral-600">Total Jam</div>
-                        </div>
-                        <div className="p-4 bg-green-50 rounded-xl">
-                            <div className="text-2xl font-bold text-green-700 mb-1">
-                                {[...new Set(currentSchedule.map(s => s.subject))].length}
+                    <h4 className="font-medium text-neutral-900 mb-4">Ringkasan Jadwal Mingguan</h4>
+                    <div className="grid grid-cols-4 gap-4">
+                        {days.map(day => {
+                            const daySchedules = scheduleData[day.id] || [];
+                            return (
+                                <div key={day.id} className="p-4 bg-gray-50 rounded-xl">
+                                    <div className="text-lg font-bold text-gray-700 mb-1">
+                                        {daySchedules.length}
+                                    </div>
+                                    <div className="text-sm text-gray-600">Jam {day.name}</div>
+                                </div>
+                            );
+                        })}
+                        <div className="p-4 bg-primary/10 rounded-xl">
+                            <div className="text-lg font-bold text-primary mb-1">
+                                {Object.values(scheduleData).reduce((total, day) => total + day.length, 0)}
                             </div>
-                            <div className="text-sm text-neutral-600">Mata Pelajaran</div>
-                        </div>
-                        <div className="p-4 bg-purple-50 rounded-xl">
-                            <div className="text-2xl font-bold text-purple-700 mb-1">
-                                {[...new Set(currentSchedule.map(s => s.teacher))].length}
-                            </div>
-                            <div className="text-sm text-neutral-600">Guru Pengajar</div>
+                            <div className="text-sm text-primary">Total Jam Minggu Ini</div>
                         </div>
                     </div>
                 </div>
             )}
         </div>
     );
-}
-
-// Helper function to check if current time is within schedule time
-function checkIfCurrentTime(timeRange) {
-    const [start, end] = timeRange.split(' - ');
-    const now = new Date();
-    const currentTime = now.getHours() * 60 + now.getMinutes();
-
-    const parseTime = (timeStr) => {
-        const [hours, minutes] = timeStr.split(':').map(Number);
-        return hours * 60 + minutes;
-    };
-
-    const startTime = parseTime(start);
-    const endTime = parseTime(end);
-
-    return currentTime >= startTime && currentTime <= endTime;
 }

@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassSchedule;
+use App\Models\Subject;
+use Auth;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ScheduleController extends Controller
 {
     public function index()
     {
-        $user = auth()->user()->getAttributes();
-        $scheduleData = [
-            'academic_year' => '2023/2024',
-            'semester' => 'Genap',
-            'user' => $user,
-        ];
+        $user = Auth::user();
 
-        return inertia('Schedule', compact('scheduleData'));
+        if ($user->role !== 'student' && $user->student->status !== 'active') {
+            abort(403, 'Hanya siswa yang bisa mengakses jadwal');
+        }
+
+        $student = $user->student;
+        $schedules = ClassSchedule::with(['subject', 'teacher', 'academic_year'])
+        ->where('class_room_id', $student->class_room_id)
+        ->get();
+
+        return Inertia::render('Schedule', [
+            'schedules' => $schedules
+        ]);
     }
 }

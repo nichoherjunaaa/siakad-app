@@ -23,12 +23,12 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'user_id' => null, // assign di seeder
             'student_number' => fake()->unique()->numerify('STD####'),
             'national_student_id' => fake()->unique()->numerify('##########'),
             'full_name' => fake()->name(),
-            'class_room_id' => ClassRoom::factory(),
-            'guardian_id' => Guardian::factory(),
+            'class_room_id' => null, // assign di seeder
+            'guardian_id' => null,  // assign di seeder
             'status' => fake()->randomElement([
                 'active',
                 'dropout',

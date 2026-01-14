@@ -18,24 +18,10 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-
+            'user_id' => null,
+            'subject_id' => null,
             'full_name' => fake()->name(),
-
             'employee_number' => fake()->unique()->numerify('EMP####'),
-
-            'primary_subject' => fake()->randomElement([
-                'Matematika',
-                'Bahasa Indonesia',
-                'Bahasa Inggris',
-                'Fisika',
-                'Kimia',
-                'Biologi',
-                'Informatika',
-                'Sejarah',
-                'Geografi',
-                'Ekonomi',
-            ]),
             'status' => fake()->randomElement(['active', 'onLeave', 'retired', 'resigned'])
         ];
     }

@@ -14,4 +14,9 @@ class ClassRoom extends Model
         'major',
         'homeroom_teacher_id',
     ];
+
+    public function class_schedules(){
+        return $this->hasMany(ClassSchedule::class);
+    }
+
 }

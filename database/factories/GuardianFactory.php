@@ -16,7 +16,7 @@ class GuardianFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'user_id' => null,
             'full_name' => fake()->name(),
             'phone_number' => fake()->phoneNumber(),
             'address' => fake()->address(),

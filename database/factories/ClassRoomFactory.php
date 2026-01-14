@@ -19,7 +19,7 @@ class ClassRoomFactory extends Factory
             'name' => fake()->randomElement(['A', 'B', 'C']),
             'grade_level' => fake()->randomElement(['X', 'XI', 'XII']),
             'major' => fake()->randomElement(['IPA', 'IPS', 'RPL', 'TKJ']),
-            'homeroom_teacher_id' => Teacher::factory(),
+            'homeroom_teacher_id' => null,
         ];
     }
 }
