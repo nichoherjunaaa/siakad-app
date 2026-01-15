@@ -13,7 +13,7 @@ export default function Schedule({ auth }) {
 
     const { schedules } = usePage().props;
 
-    const academicYear = '2023/2024';
+    const academicYear = schedules[0]?.academic_year?.year;
     const semester = 'Genap';
 
     return (
@@ -25,9 +25,6 @@ export default function Schedule({ auth }) {
 
             {/* Page Header */}
             <div className="mb-6">
-                <h1 className="text-2xl font-bold text-neutral-900 mb-2">
-                    Jadwal Pelajaran
-                </h1>
                 <p className="text-neutral-600">
                     Tahun Ajaran {academicYear} - Semester {semester}
                 </p>

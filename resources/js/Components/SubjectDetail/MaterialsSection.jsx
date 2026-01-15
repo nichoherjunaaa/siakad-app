@@ -325,35 +325,6 @@ export default function MaterialsSection() {
                 </div>
             )}
 
-            {/* Materials Summary */}
-            <div className="p-6 border-t border-neutral-200">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-3 bg-blue-50 rounded-lg">
-                        <div className="text-lg font-bold text-blue-700">
-                            {materials.filter(m => m.type === 'pdf').length}
-                        </div>
-                        <div className="text-sm text-neutral-600">File PDF</div>
-                    </div>
-                    <div className="text-center p-3 bg-purple-50 rounded-lg">
-                        <div className="text-lg font-bold text-purple-700">
-                            {materials.filter(m => m.type === 'video').length}
-                        </div>
-                        <div className="text-sm text-neutral-600">Video</div>
-                    </div>
-                    <div className="text-center p-3 bg-orange-50 rounded-lg">
-                        <div className="text-lg font-bold text-orange-700">
-                            {materials.filter(m => m.category === 'latihan').length}
-                        </div>
-                        <div className="text-sm text-neutral-600">Latihan Soal</div>
-                    </div>
-                    <div className="text-center p-3 bg-green-50 rounded-lg">
-                        <div className="text-lg font-bold text-green-700">
-                            {materials.reduce((sum, m) => sum + m.downloads, 0)}
-                        </div>
-                        <div className="text-sm text-neutral-600">Total Download</div>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }

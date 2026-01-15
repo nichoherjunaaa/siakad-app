@@ -1,33 +1,32 @@
 // resources/js/Components/Layout/Header.jsx
 import { useState, useEffect } from 'react';
 import NotificationDropdown from './NotificationDropdown';
-import { FaBars, FaBell, FaCog, FaPlus, FaSearch } from 'react-icons/fa';
+import { FaBars, FaBell, FaPlus } from 'react-icons/fa';
+
 export default function Header({
-    title = "Dashboard",
-    onMenuClick,
-    onNotificationClick,
-    user,
-    notificationsOpen = false
+    title = 'Dashboard',
+    onMenuClick = () => {},
+    onNotificationClick = () => {},
+    user = null,
+    notificationsOpen = false,
 }) {
     const [greeting, setGreeting] = useState('Selamat pagi!');
 
-    // Update greeting based on time
     useEffect(() => {
         const hour = new Date().getHours();
-        let newGreeting = "Selamat pagi!";
+        let newGreeting = 'Selamat pagi!';
 
-        if (hour >= 12 && hour < 15) newGreeting = "Selamat siang!";
-        else if (hour >= 15 && hour < 18) newGreeting = "Selamat sore!";
-        else if (hour >= 18 || hour < 4) newGreeting = "Selamat malam!";
+        if (hour >= 12 && hour < 15) newGreeting = 'Selamat siang!';
+        else if (hour >= 15 && hour < 18) newGreeting = 'Selamat sore!';
+        else if (hour >= 18 || hour < 4) newGreeting = 'Selamat malam!';
 
         setGreeting(newGreeting);
     }, []);
 
     return (
         <header className="bg-white border-b border-neutral-200 p-4 flex items-center justify-between sticky top-0 z-20">
-            {/* Left Section */}
+            {/* Left */}
             <div className="flex items-center space-x-4">
-                {/* Mobile Menu Button */}
                 <button
                     onClick={onMenuClick}
                     className="md:hidden p-2 rounded-lg hover:bg-neutral-100 transition-colors"
@@ -35,17 +34,20 @@ export default function Header({
                     <FaBars className="text-xl text-neutral-700" />
                 </button>
 
-                {/* Page Title */}
                 <div>
-                    <h1 className="text-xl font-bold text-neutral-900">{title}</h1>
-                    <p className="text-sm text-neutral-500">{greeting}</p>
+                    <h1 className="text-xl font-bold text-neutral-900">
+                        {title}
+                    </h1>
+                    <p className="text-sm text-neutral-500">
+                        {greeting}
+                        {user?.name && `, ${user.name}`}
+                    </p>
                 </div>
             </div>
 
-            {/* Right Section */}
+            {/* Right */}
             <div className="flex items-center space-x-4">
-                
-                {/* Notifications */}
+                {/* Notification */}
                 <div className="relative">
                     <button
                         onClick={onNotificationClick}
@@ -57,21 +59,20 @@ export default function Header({
                         </span>
                     </button>
 
-                    {/* Notification Dropdown */}
                     {notificationsOpen && (
-                        <NotificationDropdown onClose={() => onNotificationClick()} />
+                        <NotificationDropdown
+                            onClose={onNotificationClick}
+                        />
                     )}
                 </div>
 
-                {/* Quick Actions */}
-                <div className="flex items-center space-x-2">
-                    <button
-                        className="p-2 rounded-full hover:bg-neutral-100 transition-colors"
-                        title="Tambah"
-                    >
-                        <FaPlus className="text-neutral-700" />
-                    </button>
-                </div>
+                {/* Action */}
+                <button
+                    className="p-2 rounded-full hover:bg-neutral-100 transition-colors"
+                    title="Tambah"
+                >
+                    <FaPlus className="text-neutral-700" />
+                </button>
             </div>
         </header>
     );

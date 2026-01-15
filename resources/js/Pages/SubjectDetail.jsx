@@ -1,5 +1,5 @@
 // resources/js/Pages/SubjectDetail.jsx
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import SubjectHeader from '@/Components/SubjectDetail/SubjectHeader';
 import SubjectNavigation from '@/Components/SubjectDetail/SubjectNavigation';
@@ -10,7 +10,8 @@ import DiscussionSection from '@/Components/SubjectDetail/DiscussionSection';
 import GradeOverview from '@/Components/SubjectDetail/GradeOverview';
 import { useState } from 'react';
 
-export default function SubjectDetail({ auth, subject }) {
+export default function SubjectDetail({ auth }) {
+    const {subject} = usePage().props;
     const userData = {
         role: 'siswa', // Bisa diubah: 'guru', 'orangtua'
         name: 'Ahmad Rizki',

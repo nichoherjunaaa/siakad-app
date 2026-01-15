@@ -4,7 +4,7 @@ import Sidebar from '@/Components/Layout/Sidebar';
 import Header from '@/Components/Layout/Header';
 import Footer from '@/Components/Layout/Footer';
 
-export default function DashboardLayout({ children, user }) {
+export default function DashboardLayout({ children, user, title }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
@@ -31,6 +31,7 @@ export default function DashboardLayout({ children, user }) {
                     <Header
                         onMenuClick={() => setSidebarOpen(true)}
                         userName={user.name}
+                        title={title}
                     />
 
                     {/* Main Content */}

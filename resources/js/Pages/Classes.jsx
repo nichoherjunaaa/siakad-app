@@ -1,5 +1,5 @@
 // resources/js/Pages/Classes.jsx
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import ClassesHeader from '@/Components/Classes/ClassesHeader';
 import ClassesSummary from '@/Components/Classes/ClassesSummary';
@@ -9,6 +9,8 @@ import TeacherDirectory from '@/Components/Classes/TeacherDirectory';
 import ClassResources from '@/Components/Classes/ClassResources';
 
 export default function Classes({ auth }) {
+    const subjectClass  = usePage().props
+    
     const userData = {
         role: 'siswa', // Bisa diubah: 'guru', 'orangtua'
         name: 'Ahmad Rizki',
@@ -20,33 +22,33 @@ export default function Classes({ auth }) {
     };
 
     return (
-        <DashboardLayout 
+        <DashboardLayout
             user={userData}
             title="Kelas & Mata Pelajaran"
         >
             <Head title="Kelas" />
 
             {/* Page Header */}
-            <ClassesHeader user={userData} />
+            {/* <ClassesHeader user={userData} /> */}
 
             {/* Classes Summary */}
-            <ClassesSummary />
+            {/* <ClassesSummary /> */}
 
             {/* Main Content - Class Cards */}
             <div className="mb-6">
-                <ClassCards />
+                <ClassCards subjects={subjectClass.subject_class} />
             </div>
 
             {/* Additional Sections */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <UpcomingSessions />
-                        <ClassResources />
+                        {/* <UpcomingSessions /> */}
+                        {/* <ClassResources /> */}
                     </div>
                 </div>
                 <div>
-                    <TeacherDirectory />
+                    {/* <TeacherDirectory /> */}
                 </div>
             </div>
         </DashboardLayout>

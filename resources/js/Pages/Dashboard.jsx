@@ -37,7 +37,7 @@ export default function Dashboard({ auth, status }) {
     return (
         <DashboardLayout 
             user={userData}
-            title="Dashboard"
+            title="Beranda"
         >
             <Head title="Dashboard" />
 

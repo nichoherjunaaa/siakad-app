@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/classes', [ClassesController::class, 'index'])->name('classes');
     Route::get('/students', [StudentsController::class, 'index'])->name('students');
     Route::get('/teachers', [TeachersController::class, 'index'])->name('teachers');
-    Route::get('/classes/{subject}', [SubjectDetailController::class, 'show'])->name('subject.detail');
+    Route::get('/classes/{id}', [SubjectDetailController::class, 'show'])->name('subject.detail');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

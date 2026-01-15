@@ -21,7 +21,7 @@ export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
         { name: 'Beranda', route: 'dashboard', icon: FaHome },
         { name: 'Jadwal', route: 'schedule', icon: FaCalendarAlt },
         {name : 'Kelas', route: 'classes', icon:FaDoorOpen },
-        { name: 'Materi', route: 'materials', icon: FaBook },
+        // { name: 'Materi', route: 'materials', icon: FaBook },
         { name: 'Nilai', route: 'grades', icon: FaChartLine },
         { name: 'Tugas', route: 'assignments', icon: FaClipboardCheck },
         { name: 'Siswa', route: 'students', icon: FaUserGraduate},
