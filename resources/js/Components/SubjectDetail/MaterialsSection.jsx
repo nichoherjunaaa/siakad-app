@@ -1,5 +1,6 @@
 // resources/js/Components/SubjectDetail/MaterialsSection.jsx
 import { useState } from 'react';
+import { FaBook, FaDownload, FaEye, FaFile, FaFileAlt, FaPlayCircle, FaPlus, FaUserTie } from 'react-icons/fa';
 
 export default function MaterialsSection() {
     const [materials] = useState([
@@ -160,50 +161,12 @@ export default function MaterialsSection() {
                         </p>
                     </div>
                     <div className="mt-4 md:mt-0">
-                        <button className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark">
-                            <i className="fas fa-plus mr-2"></i>
+                        <button className="px-4 py-2 flex items-center bg-primary text-white rounded-lg hover:bg-primary-dark">
+                            <FaPlus className='mr-2'/>
                             Unggah Materi Baru
                         </button>
                     </div>
-                </div>
-
-                {/* Filters */}
-                <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
-                    <div className="flex-1">
-                        <div className="relative">
-                            <input
-                                type="text"
-                                placeholder="Cari materi..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                            />
-                            <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                        <select
-                            value={filterCategory}
-                            onChange={(e) => setFilterCategory(e.target.value)}
-                            className="px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                        >
-                            {categories.map(cat => (
-                                <option key={cat.id} value={cat.id}>{cat.label}</option>
-                            ))}
-                        </select>
-
-                        <select
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value)}
-                            className="px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                        >
-                            <option value="date">Terbaru</option>
-                            <option value="title">Judul A-Z</option>
-                            <option value="downloads">Populer</option>
-                        </select>
-                    </div>
-                </div>
+                </div>                
             </div>
 
             {/* Materials List */}
@@ -213,7 +176,7 @@ export default function MaterialsSection() {
                         <div className="flex flex-col lg:flex-row lg:items-start">
                             {/* File Icon */}
                             <div className="w-16 h-16 bg-neutral-100 rounded-xl flex items-center justify-center mb-4 lg:mb-0 lg:mr-4">
-                                <i className={`${getFileIcon(material.type)} text-2xl`}></i>
+                                <FaBook className="text-2xl text-primary" />
                             </div>
 
                             {/* Material Info */}
@@ -228,9 +191,6 @@ export default function MaterialsSection() {
                                         </p>
                                     </div>
                                     <div className="flex items-center space-x-2 mb-3 lg:mb-0">
-                                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(material.category)}`}>
-                                            {getCategoryLabel(material.category)}
-                                        </span>
                                         <span className="text-sm text-neutral-500">
                                             {material.uploadDate}
                                         </span>
@@ -240,27 +200,27 @@ export default function MaterialsSection() {
                                 {/* Material Details */}
                                 <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-600 mb-4">
                                     <div className="flex items-center">
-                                        <i className="fas fa-user-tie mr-2"></i>
+                                        <FaUserTie className='mr-2'/>
                                         <span>{material.uploader}</span>
                                     </div>
                                     <div className="flex items-center">
-                                        <i className="fas fa-file mr-2"></i>
+                                        <FaFile className='mr-2'/>
                                         <span>{material.size}</span>
                                     </div>
                                     {material.type === 'pdf' && (
                                         <div className="flex items-center">
-                                            <i className="fas fa-file-alt mr-2"></i>
+                                            <FaFileAlt className='mr-2'/>
                                             <span>{material.pages} halaman</span>
                                         </div>
                                     )}
                                     {material.type === 'video' && (
                                         <div className="flex items-center">
-                                            <i className="fas fa-play-circle mr-2"></i>
+                                            <FaPlayCircle className='mr-2'/>
                                             <span>{material.duration}</span>
                                         </div>
                                     )}
                                     <div className="flex items-center">
-                                        <i className="fas fa-download mr-2"></i>
+                                        <FaDownload className='mr-2'/>
                                         <span>{material.downloads}× diunduh</span>
                                     </div>
                                 </div>
@@ -283,21 +243,15 @@ export default function MaterialsSection() {
                                         onClick={() => handlePreview(material)}
                                         className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 flex items-center"
                                     >
-                                        <i className="fas fa-eye mr-2"></i>
+                                        <FaEye className='mr-2'/>
                                         Preview
                                     </button>
                                     <button
                                         onClick={() => handleDownload(material)}
                                         className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark flex items-center"
                                     >
-                                        <i className="fas fa-download mr-2"></i>
+                                        <FaDownload className='mr-2'/>
                                         Download
-                                    </button>
-                                    <button className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50">
-                                        <i className="fas fa-share-alt"></i>
-                                    </button>
-                                    <button className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50">
-                                        <i className="fas fa-bookmark"></i>
                                     </button>
                                 </div>
                             </div>

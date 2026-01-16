@@ -20,10 +20,10 @@ export default function Sidebar({ user, sidebarOpen, setSidebarOpen }) {
     const navigation = [
         { name: 'Beranda', route: 'dashboard', icon: FaHome },
         { name: 'Jadwal', route: 'schedule', icon: FaCalendarAlt },
-        {name : 'Kelas', route: 'classes', icon:FaDoorOpen },
+        {name : 'Kelas', route: 'classes', icon:FaBook },
         // { name: 'Materi', route: 'materials', icon: FaBook },
         { name: 'Nilai', route: 'grades', icon: FaChartLine },
-        { name: 'Tugas', route: 'assignments', icon: FaClipboardCheck },
+        // { name: 'Tugas', route: 'assignments', icon: FaClipboardCheck },
         { name: 'Siswa', route: 'students', icon: FaUserGraduate},
         { name: 'Guru', route: 'teachers', icon: FaUserTie},
         { name: 'Pengaturan', route: '#', icon: FaCog },

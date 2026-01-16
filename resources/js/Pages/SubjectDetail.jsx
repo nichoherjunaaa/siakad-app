@@ -11,7 +11,7 @@ import GradeOverview from '@/Components/SubjectDetail/GradeOverview';
 import { useState } from 'react';
 
 export default function SubjectDetail({ auth }) {
-    const {subject} = usePage().props;
+    const { subjectById } = usePage().props;
     const userData = {
         role: 'siswa', // Bisa diubah: 'guru', 'orangtua'
         name: 'Ahmad Rizki',
@@ -43,7 +43,7 @@ export default function SubjectDetail({ auth }) {
         if (['materials', 'assignments', 'announcements', 'discussions'].includes(activeTab)) {
             return (
                 <div className="space-y-6">
-                    <GradeOverview />
+                    {/* <GradeOverview /> */}
                     {/* Tambahkan widget sidebar lainnya di sini */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200">
                         <h4 className="font-medium text-neutral-900 mb-4">Upcoming Deadlines</h4>
@@ -65,19 +65,19 @@ export default function SubjectDetail({ auth }) {
     };
 
     return (
-        <DashboardLayout 
+        <DashboardLayout
             user={userData}
-            title={`${subject?.name || 'Mata Pelajaran'} - Detail`}
+            title={`${subjectById?.name || 'Mata Pelajaran'} - Detail`}
         >
-            <Head title={subject?.name || 'Kelas Detail'} />
+            <Head title={subjectById?.name || 'Kelas Detail'} />
 
             {/* Breadcrumb */}
             <div className="mb-6">
                 <nav className="flex text-sm" aria-label="Breadcrumb">
                     <ol className="flex items-center space-x-2">
                         <li>
-                            <Link 
-                                href="/classes" 
+                            <Link
+                                href="/classes"
                                 className="text-neutral-600 hover:text-primary transition-colors"
                             >
                                 Kelas
@@ -87,14 +87,14 @@ export default function SubjectDetail({ auth }) {
                             <i className="fas fa-chevron-right"></i>
                         </li>
                         <li className="text-neutral-900 font-medium">
-                            {subject?.name || 'Mata Pelajaran'}
+                            {subjectById?.name || 'Mata Pelajaran'}
                         </li>
                     </ol>
                 </nav>
             </div>
 
             {/* Page Header */}
-            <SubjectHeader subject={subject} />
+            <SubjectHeader schedule={subjectById} />
 
             {/* Navigation Tabs - Mengirim state activeTab dan handler */}
             <SubjectNavigation activeTab={activeTab} onTabChange={setActiveTab} />

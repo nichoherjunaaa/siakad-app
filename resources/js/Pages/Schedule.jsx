@@ -39,11 +39,11 @@ export default function Schedule({ auth }) {
             {/* Additional Information */}
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
-                    <ScheduleCalendar />
+                    {/* <ScheduleCalendar /> */}
                 </div>
                 <div className="space-y-6">
-                    <ClassInformation user={userData} />
-                    <TeacherContacts />
+                    {/* <ClassInformation user={userData} /> */}
+                    {/* <TeacherContacts /> */}
                 </div>
             </div>
         </DashboardLayout>

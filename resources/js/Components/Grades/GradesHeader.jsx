@@ -1,5 +1,6 @@
 // resources/js/Components/Grades/GradesHeader.jsx
 import { useState } from 'react';
+import { FaCalendarCheck, FaChartBar, FaChartLine, FaFileExcel, FaFilePdf, FaPrint, FaTrophy } from 'react-icons/fa';
 
 export default function GradesHeader({ user }) {
     const [academicYear, setAcademicYear] = useState('2023/2024');
@@ -41,9 +42,6 @@ export default function GradesHeader({ user }) {
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200 mb-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-neutral-900 mb-2">
-                        Nilai Akademik
-                    </h1>
                     <p className="text-neutral-600">
                         {user.class} • Tahun Ajaran {user.academicYear} • Semester {user.semester}
                     </p>
@@ -53,21 +51,21 @@ export default function GradesHeader({ user }) {
                         onClick={() => handleExport('pdf')}
                         className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 flex items-center"
                     >
-                        <i className="fas fa-file-pdf text-red-500 mr-2"></i>
+                        <FaFilePdf className='text-red-500 mr-2' />
                         PDF
                     </button>
                     <button
                         onClick={() => handleExport('excel')}
                         className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 flex items-center"
                     >
-                        <i className="fas fa-file-excel text-green-500 mr-2"></i>
+                        <FaFileExcel className='text-green-500 mr-2' />
                         Excel
                     </button>
                     <button
                         onClick={handlePrint}
                         className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark flex items-center"
                     >
-                        <i className="fas fa-print mr-2"></i>
+                        <FaPrint className='mr-2'/>
                         Cetak
                     </button>
                 </div>
@@ -78,7 +76,7 @@ export default function GradesHeader({ user }) {
                 <div className="col-span-2 bg-gradient-to-r from-primary to-secondary rounded-xl p-4 text-white">
                     <div className="flex items-center">
                         <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-chart-line text-xl"></i>
+                            <FaChartLine className='text-xl'/>
                         </div>
                         <div>
                             <div className="text-2xl font-bold">{overallStats.average}</div>
@@ -90,7 +88,7 @@ export default function GradesHeader({ user }) {
                 <div className="bg-blue-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-trophy text-blue-600"></i>
+                            <FaTrophy className='text-blue-600'/>
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">
@@ -104,7 +102,7 @@ export default function GradesHeader({ user }) {
                 <div className="bg-green-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-chart-bar text-green-600"></i>
+                            <FaChartBar className='text-green-600'/>
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">
@@ -118,7 +116,7 @@ export default function GradesHeader({ user }) {
                 <div className="bg-orange-50 p-4 rounded-xl">
                     <div className="flex items-center">
                         <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
-                            <i className="fas fa-calendar-check text-orange-600"></i>
+                            <FaCalendarCheck className='text-orange-600'/>
                         </div>
                         <div>
                             <div className="text-xl font-bold text-neutral-900">
@@ -178,30 +176,8 @@ export default function GradesHeader({ user }) {
                             ))}
                         </select>
                     </div>
-
-                    {/* View Mode Toggle */}
-                    <div className="flex items-center space-x-2">
-                        <span className="text-sm text-neutral-600">Tampilan:</span>
-                        <div className="flex bg-neutral-100 rounded-lg p-1">
-                            <button
-                                onClick={() => setViewMode('detailed')}
-                                className={`px-3 py-1 rounded-md ${viewMode === 'detailed' ? 'bg-white shadow' : 'hover:bg-neutral-200'}`}
-                            >
-                                <i className="fas fa-list mr-1"></i>
-                                Detail
-                            </button>
-                            <button
-                                onClick={() => setViewMode('summary')}
-                                className={`px-3 py-1 rounded-md ${viewMode === 'summary' ? 'bg-white shadow' : 'hover:bg-neutral-200'}`}
-                            >
-                                <i className="fas fa-chart-pie mr-1"></i>
-                                Ringkasan
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
-                {/* Quick Info */}
                 <div className="text-sm text-neutral-600">
                     <div className="flex items-center">
                         <i className="fas fa-user-tie mr-2 text-primary"></i>

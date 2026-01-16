@@ -30,18 +30,18 @@ export default function Grades({ auth }) {
 
             <GradesSummary />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                 <div className="lg:col-span-2">
                     <GradesTable />
                 </div>
                 <div className="space-y-6">
-                    <SubjectPerformance />
+                    {/* <SubjectPerformance /> */}
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-                <ProgressChart />
-                <GradeStatistics />
+                {/* <ProgressChart /> */}
+                {/* <GradeStatistics /> */}
             </div>
         </DashboardLayout>
     );

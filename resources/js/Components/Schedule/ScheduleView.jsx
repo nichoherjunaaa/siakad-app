@@ -96,7 +96,7 @@ export default function ScheduleView({ user, schedules: schedulesFromServer }) {
                     time: timeRange,
                     subject: schedule.subject?.name || 'Mata Pelajaran',
                     teacher: schedule.teacher?.full_name || 'Guru',
-                    room: `Ruang ${schedule.class_room_id || 'Kelas'}`,
+                    room: `Kelas ${schedule.class_room.grade_level + '-' + schedule.class_room.major + '-' + schedule.class_room.name || 'Kelas'}`,
                     type: schedule.subject?.name?.toLowerCase() || schedule.subject?.subject_code?.toLowerCase() || 'default',
                     start_time: startTime,
                     end_time: endTime,

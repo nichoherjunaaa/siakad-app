@@ -19,7 +19,7 @@ class ScheduleController extends Controller
         }
 
         $student = $user->student;
-        $schedules = ClassSchedule::with(['subject', 'teacher', 'academic_year'])
+        $schedules = ClassSchedule::with(['subject', 'teacher', 'academic_year', 'class_room'])
         ->where('class_room_id', $student->class_room_id)
         ->get();
 
