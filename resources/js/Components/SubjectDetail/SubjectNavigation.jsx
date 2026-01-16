@@ -4,7 +4,6 @@ export default function SubjectNavigation({ activeTab, onTabChange }) {
         { id: 'materials', label: 'Materi', icon: 'fas fa-book', badge: null },
         { id: 'assignments', label: 'Tugas', icon: 'fas fa-tasks', badge: 3 },
         { id: 'announcements', label: 'Pengumuman', icon: 'fas fa-bullhorn', badge: 1 },
-        { id: 'discussions', label: 'Diskusi', icon: 'fas fa-comments', badge: null },
     ];
 
     return (

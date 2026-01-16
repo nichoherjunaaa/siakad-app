@@ -1,5 +1,6 @@
 // resources/js/Components/SubjectDetail/AssignmentsSection.jsx
 import { useState } from 'react';
+import { FaCheck, FaCheckCircle, FaDownload, FaExclamationTriangle, FaPaperclip, FaPencilAlt, FaPlay, FaTasks, FaUpload } from 'react-icons/fa';
 
 export default function AssignmentsSection() {
     const [assignments] = useState([
@@ -166,32 +167,7 @@ export default function AssignmentsSection() {
                             {assignments.filter(a => a.status === 'completed').length} dari {assignments.length} tugas selesai
                         </p>
                     </div>
-                    <div className="mt-4 md:mt-0 flex items-center space-x-4">
-                        <select
-                            value={filterStatus}
-                            onChange={(e) => setFilterStatus(e.target.value)}
-                            className="px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                        >
-                            <option value="all">Semua Status</option>
-                            <option value="completed">Selesai</option>
-                            <option value="inProgress">Dalam Proses</option>
-                            <option value="upcoming">Akan Datang</option>
-                            <option value="overdue">Terlambat</option>
-                            <option value="notStarted">Belum Dimulai</option>
-                        </select>
-
-                        <select
-                            value={filterType}
-                            onChange={(e) => setFilterType(e.target.value)}
-                            className="px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                        >
-                            <option value="all">Semua Jenis</option>
-                            <option value="individual">Individu</option>
-                            <option value="group">Kelompok</option>
-                            <option value="quiz">Kuis</option>
-                            <option value="presentation">Presentasi</option>
-                        </select>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -208,12 +184,6 @@ export default function AssignmentsSection() {
                                         <h4 className="font-bold text-lg text-neutral-900 mr-3">
                                             {assignment.title}
                                         </h4>
-                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(assignment.status)}`}>
-                                            {getStatusLabel(assignment.status)}
-                                        </span>
-                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ml-2 ${getTypeColor(assignment.type)}`}>
-                                            {getTypeLabel(assignment.type)}
-                                        </span>
                                     </div>
                                     <p className="text-sm text-neutral-600 mb-3">
                                         {assignment.description}
@@ -266,7 +236,7 @@ export default function AssignmentsSection() {
                                 <div className="flex items-center space-x-2">
                                     {assignment.attachments && assignment.attachments.length > 0 && (
                                         <button className="px-3 py-2 text-sm border border-neutral-300 rounded-lg hover:bg-neutral-50 flex items-center">
-                                            <i className="fas fa-paperclip mr-1"></i>
+                                            <FaPaperclip className='mr-1'/>
                                             {assignment.attachments.length} lampiran
                                         </button>
                                     )}
@@ -282,7 +252,7 @@ export default function AssignmentsSection() {
                                 <div className="flex items-center space-x-2">
                                     {assignment.status === 'completed' ? (
                                         <button className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 flex items-center">
-                                            <i className="fas fa-check-circle mr-2"></i>
+                                            <FaCheckCircle className='mr-2'/>
                                             Sudah Dikumpulkan
                                         </button>
                                     ) : assignment.status === 'inProgress' ? (
@@ -290,7 +260,7 @@ export default function AssignmentsSection() {
                                             onClick={() => handleSubmitAssignment(assignment)}
                                             className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark flex items-center"
                                         >
-                                            <i className="fas fa-upload mr-2"></i>
+                                            <FaUpload className='mr-2'/>
                                             Kumpulkan Tugas
                                         </button>
                                     ) : assignment.type === 'quiz' && assignment.status === 'upcoming' ? (
@@ -298,7 +268,7 @@ export default function AssignmentsSection() {
                                             onClick={() => handleStartQuiz(assignment)}
                                             className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark flex items-center"
                                         >
-                                            <i className="fas fa-play mr-2"></i>
+                                            <FaPlay className='mr-2'/>
                                             Mulai Kuis
                                         </button>
                                     ) : assignment.status === 'overdue' ? (
@@ -306,7 +276,7 @@ export default function AssignmentsSection() {
                                             onClick={() => handleSubmitAssignment(assignment)}
                                             className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 flex items-center"
                                         >
-                                            <i className="fas fa-exclamation-triangle mr-2"></i>
+                                            <FaExclamationTriangle className='mr-2'/>
                                             Kumpulkan Sekarang
                                         </button>
                                     ) : (
@@ -314,7 +284,7 @@ export default function AssignmentsSection() {
                                             onClick={() => handleSubmitAssignment(assignment)}
                                             className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark flex items-center"
                                         >
-                                            <i className="fas fa-pencil-alt mr-2"></i>
+                                            <FaPencilAlt className='mr-2'/>
                                             Kerjakan Tugas
                                         </button>
                                     )}
@@ -400,7 +370,7 @@ export default function AssignmentsSection() {
                                                             </div>
                                                         </div>
                                                         <button className="text-primary hover:text-primary-dark">
-                                                            <i className="fas fa-download"></i>
+                                                            <FaDownload/>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -439,7 +409,7 @@ export default function AssignmentsSection() {
             {/* Empty State */}
             {filteredAssignments.length === 0 && (
                 <div className="p-12 text-center">
-                    <i className="fas fa-tasks text-4xl text-neutral-300 mb-4"></i>
+                    <FaTasks className='text-4xl text-neutral-300 mb-4'/>
                     <h3 className="text-lg font-medium text-neutral-700 mb-2">Tidak ada tugas</h3>
                     <p className="text-neutral-500">Belum ada tugas yang diberikan untuk mata pelajaran ini.</p>
                 </div>
